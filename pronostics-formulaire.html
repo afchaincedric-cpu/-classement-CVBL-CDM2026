@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Classement Pronostics CDM 2026 — Notaires CVBL</title>
+<title>Pronostics — 3ème journée — Notaires CVBL</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Oswald:wght@400;500;600;700&display=swap');
 
@@ -12,10 +12,9 @@
     --navy-deep: #000F42;
     --pitch: #0B4D32;
     --pitch-light: #0F6B45;
-    --chalk: #F4F6F2;
     --gold: #D9A441;
-    --line: rgba(255,255,255,0.16);
     --ink: #0C1320;
+    --card-line: #eef0f4;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -32,30 +31,23 @@
     min-height: 100vh;
   }
 
-  /* ---------- HERO / PITCH BANNER ---------- */
   .pitch-banner {
     position: relative;
     background:
       repeating-linear-gradient(
-        90deg,
-        var(--pitch) 0px,
-        var(--pitch) 64px,
-        var(--pitch-light) 64px,
-        var(--pitch-light) 128px
+        90deg, var(--pitch) 0px, var(--pitch) 64px,
+        var(--pitch-light) 64px, var(--pitch-light) 128px
       );
-    padding: 46px 20px 64px;
+    padding: 40px 20px 56px;
     overflow: hidden;
   }
   .pitch-banner::before {
-    /* center circle */
     content: "";
     position: absolute;
-    width: 340px;
-    height: 340px;
+    width: 320px; height: 320px;
     border: 2px solid rgba(255,255,255,0.35);
     border-radius: 50%;
-    top: -170px;
-    right: -90px;
+    top: -160px; right: -80px;
   }
   .pitch-banner::after {
     content: "";
@@ -64,190 +56,197 @@
     height: 6px;
     background: var(--gold);
   }
-  .trophy-watermark {
-    position: absolute;
-    right: -10px;
-    bottom: -18px;
-    width: 190px;
-    opacity: 0.16;
-    z-index: 1;
-    pointer-events: none;
-  }
-
   .top-row {
-    position: relative;
-    z-index: 2;
-    max-width: 760px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 22px;
+    position: relative; z-index: 2;
+    max-width: 720px; margin: 0 auto;
+    display: flex; align-items: center; gap: 20px;
   }
   .logo-disc {
-    flex: 0 0 auto;
-    width: 92px;
-    height: 92px;
-    background: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex: 0 0 auto; width: 78px; height: 78px;
+    background: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
     box-shadow: 0 8px 22px rgba(0,0,0,0.35);
-    padding: 10px;
+    padding: 9px;
   }
   .logo-disc img { width: 100%; height: 100%; object-fit: contain; }
-
   .title-block { color: #fff; }
   .eyebrow {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.74rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 600;
-    margin-bottom: 4px;
+    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 4px;
   }
   h1 {
     font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    font-size: 2rem;
-    line-height: 1.08;
-    margin: 0 0 6px;
+    font-weight: 700; font-size: 1.6rem; line-height: 1.1; margin: 0 0 5px;
   }
   h1 em { font-style: italic; color: var(--gold); }
-  .office {
-    font-size: 0.92rem;
-    color: rgba(255,255,255,0.78);
-    font-weight: 400;
-    letter-spacing: 0.3px;
-  }
+  .office { font-size: 0.85rem; color: rgba(255,255,255,0.78); }
 
-  .ball-row {
-    position: relative;
-    z-index: 2;
-    max-width: 760px;
-    margin: 26px auto 0;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  .nav-pill {
+    position: relative; z-index: 2;
+    max-width: 720px; margin: 22px auto 0;
+    display: flex; gap: 10px; flex-wrap: wrap;
   }
-  .ball {
-    width: 30px; height: 30px; flex: 0 0 auto;
-    animation: roll 7s linear infinite;
-  }
-  @keyframes roll { to { transform: rotate(360deg); } }
-  .dash {
-    flex: 1;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.55) 0 10px, transparent 10px 20px);
-  }
-  .updated-pill {
-    flex: 0 0 auto;
+  .nav-pill a {
+    text-decoration: none;
     background: rgba(255,255,255,0.12);
     border: 1px solid rgba(255,255,255,0.35);
-    color: #fff;
-    padding: 7px 16px;
-    border-radius: 30px;
-    font-size: 0.78rem;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
+    color: #fff; padding: 7px 16px; border-radius: 30px;
+    font-size: 0.78rem; letter-spacing: 0.4px;
   }
-  .updated-pill b { color: var(--gold); }
+  .nav-pill a.active { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); font-weight: 600; }
 
-  /* ---------- TABLE SECTION ---------- */
-  .wrap {
-    max-width: 760px;
-    margin: -34px auto 0;
-    padding: 0 20px 60px;
-    position: relative;
-    z-index: 3;
-  }
-  .card {
+  .wrap { max-width: 720px; margin: -28px auto 0; padding: 0 20px 70px; position: relative; z-index: 3; }
+
+  .intro-card {
     background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 18px 40px rgba(0,16,60,0.18);
-    overflow: hidden;
+    border-radius: 14px;
     border: 1px solid #e9ebf0;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 10px 26px rgba(0,16,60,0.14);
   }
-  .card-head {
-    padding: 22px 24px 14px;
-    border-bottom: 1px solid #eef0f4;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-  }
-  .card-head h2 {
+  .intro-card h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    margin: 0;
     color: var(--navy);
+    font-size: 1.15rem;
+    margin: 0 0 6px;
   }
-  .card-head span {
-    font-size: 0.72rem;
-    color: #8b93a3;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+  .intro-card p { margin: 0; color: #5a6378; font-size: 0.88rem; line-height: 1.5; }
 
-  table { width: 100%; border-collapse: collapse; }
-  thead th {
-    text-align: left;
-    padding: 10px 24px;
-    font-size: 0.7rem;
+  .field-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e9ebf0;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 18px rgba(0,16,60,0.08);
+  }
+  label.player-label {
+    display: block;
+    font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #8b93a3;
     font-weight: 600;
+    margin-bottom: 8px;
+  }
+  select.player-select {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    border: 1.5px solid #dde1ea;
+    border-radius: 8px;
     background: #fafbfd;
   }
-  thead th.num-h { text-align: right; }
-  tbody td {
-    padding: 13px 24px;
-    border-top: 1px solid #f1f2f6;
-    font-size: 0.95rem;
-  }
-  tbody tr:hover { background: #f7f9ff; }
 
-  .jersey {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px; height: 30px;
+  .journee-title {
+    color: var(--gold);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin: 22px 4px 10px;
+  }
+
+  .match-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e9ebf0;
+    margin-bottom: 8px;
+    padding: 12px 14px;
+    box-shadow: 0 4px 14px rgba(0,16,60,0.06);
+  }
+  .match-group-row {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .match-group {
+    flex: 0 0 auto;
+    width: 24px; height: 24px;
     border-radius: 50%;
     background: var(--navy);
     color: #fff;
+    font-size: 0.68rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .match-teams-row {
+    flex: 1 1 auto;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .team-name {
+    flex: 1;
     font-weight: 600;
-    font-size: 0.82rem;
-    font-family: 'Oswald', sans-serif;
-  }
-  tr.top1 .jersey { background: var(--gold); color: var(--navy-deep); }
-  tr.top2 .jersey { background: #B9C2D0; color: var(--navy-deep); }
-  tr.top3 .jersey { background: #C8895A; color: #fff; }
-
-  .name { font-weight: 600; color: var(--navy); letter-spacing: 0.2px; }
-  .num { text-align: right; color: #98a0b0; font-variant-numeric: tabular-nums; }
-  .pts {
-    text-align: right;
-    font-weight: 700;
     color: var(--navy);
-    font-size: 1.02rem;
-    font-variant-numeric: tabular-nums;
+    font-size: 0.86rem;
   }
+  .team-name.home { text-align: right; }
+  .team-name.away { text-align: left; }
+  .score-inputs {
+    display: flex; align-items: center; gap: 6px;
+    flex: 0 0 auto;
+  }
+  input.score-input {
+    width: 46px;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--navy);
+    border: 1.5px solid #dde1ea;
+    border-radius: 7px;
+    padding: 7px 0;
+    background: #fafbfd;
+  }
+  input.score-input:focus { outline: none; border-color: var(--gold); background: #fff; }
+  input.score-input.error { border-color: #e25656; background: #fff4f4; }
+  .score-dash { color: #b9c0cf; font-weight: 600; }
+
+  .submit-btn {
+    width: 100%;
+    margin-top: 8px;
+    background: var(--gold);
+    color: var(--navy-deep);
+    border: none;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.4px;
+    padding: 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+  .submit-btn:active { transform: translateY(1px); }
+
+  .status-msg {
+    text-align: center;
+    color: #fff;
+    font-size: 0.85rem;
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    display: none;
+  }
+  .status-msg.show { display: block; }
+  .status-msg.ok { background: rgba(11,77,50,0.45); border: 1px solid rgba(255,255,255,0.25); }
+  .status-msg.err { background: rgba(178,40,40,0.5); border: 1px solid rgba(255,255,255,0.25); }
 
   footer {
     text-align: center;
     color: rgba(255,255,255,0.55);
     font-size: 0.74rem;
-    margin-top: 20px;
+    margin-top: 24px;
     letter-spacing: 0.3px;
   }
   footer .firm { color: var(--gold); font-weight: 600; }
 
   @media (max-width: 480px) {
-    h1 { font-size: 1.5rem; }
-    .logo-disc { width: 70px; height: 70px; }
-    thead th, tbody td { padding: 10px 12px; }
-    .card-head { padding: 18px 14px 12px; }
+    h1 { font-size: 1.3rem; }
+    .logo-disc { width: 64px; height: 64px; }
+    .team-name { font-size: 0.76rem; }
+    input.score-input { width: 38px; padding: 6px 0; font-size: 0.95rem; }
   }
 </style>
 </head>
@@ -260,91 +259,151 @@
     </div>
     <div class="title-block">
       <div class="eyebrow">Pronostics entre amis</div>
-      <h1>Classement <em>Coupe du Monde</em> 2026</h1>
+      <h1>Mes <em>pronostics</em> — 3ème journée</h1>
       <div class="office">Notaires CVBL — Corbie · Villers-Bretonneux · Longueau</div>
     </div>
   </div>
-
-  <svg class="trophy-watermark" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-    <rect x="70" y="206" width="60" height="14" rx="3" fill="#fff"/>
-    <rect x="85" y="190" width="30" height="20" fill="#fff"/>
-    <path d="M60 60 H140 V110 C140 145 116 168 100 168 C84 168 60 145 60 110 Z" fill="#fff"/>
-    <path d="M60 70 C30 70 22 100 38 118 C48 130 60 132 64 130 C50 118 48 90 56 76 Z" fill="#fff"/>
-    <path d="M140 70 C170 70 178 100 162 118 C152 130 140 132 136 130 C150 118 152 90 144 76 Z" fill="#fff"/>
-    <rect x="56" y="46" width="88" height="18" rx="4" fill="#fff"/>
-    <path d="M100 90 L106 104 L121 104 L109 113 L114 128 L100 119 L86 128 L91 113 L79 104 L94 104 Z" fill="#001B72" opacity="0.55"/>
-  </svg>
-
-  <div class="ball-row">
-    <svg class="ball" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="46" fill="#fff" stroke="#111" stroke-width="3"/>
-      <polygon points="50,22 64,32 59,49 41,49 36,32" fill="#111"/>
-      <polygon points="50,22 64,32 78,28 74,12" fill="none" stroke="#111" stroke-width="2.5"/>
-      <polygon points="50,22 36,32 22,28 26,12" fill="none" stroke="#111" stroke-width="2.5"/>
-      <polygon points="64,32 59,49 76,60 86,46" fill="none" stroke="#111" stroke-width="2.5"/>
-      <polygon points="36,32 41,49 24,60 14,46" fill="none" stroke="#111" stroke-width="2.5"/>
-      <polygon points="41,49 59,49 64,66 50,78 36,66" fill="none" stroke="#111" stroke-width="2.5"/>
-    </svg>
-    <div class="dash"></div>
-    <div class="updated-pill">Dernier match : <b>Turquie 0 - 1 Paraguay</b></div>
-  </div>
-
-  <div class="nav-pill" style="position:relative;z-index:2;max-width:760px;margin:18px auto 0;display:flex;gap:10px;flex-wrap:wrap;">
-    <a href="index.html" style="text-decoration:none;background:var(--gold);color:var(--navy-deep);border:1px solid var(--gold);padding:7px 16px;border-radius:30px;font-size:0.78rem;font-weight:600;">Classement</a>
-    <a href="pronostics.html" style="text-decoration:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);color:#fff;padding:7px 16px;border-radius:30px;font-size:0.78rem;">Pronostics par match</a>
-    <a href="pronostics-formulaire.html" style="text-decoration:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);color:#fff;padding:7px 16px;border-radius:30px;font-size:0.78rem;">Remplir mes pronostics</a>
+  <div class="nav-pill">
+    <a href="index.html">Classement</a>
+    <a href="pronostics.html">Pronostics par match</a>
+    <a href="pronostics-formulaire.html" class="active">Remplir mes pronostics</a>
   </div>
 </div>
 
 <div class="wrap">
-  <div class="card">
-    <div class="card-head">
-      <h2>Classement général</h2>
-      <span>BP · BPMS · MP</span>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Rang</th>
-          <th>Joueur</th>
-          <th class="num-h">BP</th>
-          <th class="num-h">BPMS</th>
-          <th class="num-h">MP</th>
-          <th class="num-h">Pts</th>
-        </tr>
-      </thead>
-      <tbody id="classement-body"></tbody>
-    </table>
+  <div class="intro-card">
+    <h2>Avant de commencer</h2>
+    <p>Choisis ton prénom, puis indique ton pronostic pour chacun des 24 matchs de la 3ème journée. À la fin, ton appli mail s'ouvrira avec tes réponses déjà rédigées — il ne te restera plus qu'à appuyer sur « Envoyer ».</p>
   </div>
-  <footer>
-    Mis à jour automatiquement à partir des pronostics — <span class="firm">Notaires CVBL</span>
-  </footer>
 
-  <div style="text-align:center;margin-top:18px;">
-    <a href="grille-j3.pdf" download style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--gold);color:var(--navy-deep);font-weight:600;padding:10px 22px;border-radius:30px;font-size:0.85rem;letter-spacing:0.3px;box-shadow:0 6px 16px rgba(0,0,0,0.25);">
-      ⬇ Télécharger la grille — 3ème journée
-    </a>
+  <div class="field-card">
+    <label class="player-label" for="playerSelect">Ton prénom</label>
+    <select class="player-select" id="playerSelect" required>
+      <option value="">— Sélectionne ton prénom —</option>
+    </select>
   </div>
+
+  <form id="predForm"></form>
+
+  <button class="submit-btn" id="submitBtn">⚽ Envoyer mes pronostics par mail</button>
+  <div class="status-msg" id="statusMsg"></div>
+
+  <footer>
+    Tes pronostics restent confidentiels jusqu'à ce que tout le monde ait répondu — <span class="firm">Notaires CVBL</span>
+  </footer>
 </div>
 
 <script>
-const data = [{"rang": 1, "nom": "CEDRIC", "bp": 7, "bpms": 12, "mp": 13, "pts": 33}, {"rang": 2, "nom": "EMMANUEL", "bp": 6, "bpms": 12, "mp": 14, "pts": 30}, {"rang": "-", "nom": "FRED", "bp": 5, "bpms": 15, "mp": 12, "pts": 30}, {"rang": 4, "nom": "CARO", "bp": 5, "bpms": 12, "mp": 15, "pts": 27}, {"rang": 5, "nom": "DELPHINE", "bp": 4, "bpms": 14, "mp": 14, "pts": 26}, {"rang": 6, "nom": "ALEX", "bp": 4, "bpms": 13, "mp": 15, "pts": 25}, {"rang": "-", "nom": "GAELLE", "bp": 4, "bpms": 13, "mp": 15, "pts": 25}, {"rang": 8, "nom": "ROMU", "bp": 3, "bpms": 15, "mp": 14, "pts": 24}, {"rang": 9, "nom": "MARIA", "bp": 3, "bpms": 14, "mp": 15, "pts": 23}, {"rang": 10, "nom": "OPHELIE", "bp": 4, "bpms": 10, "mp": 18, "pts": 22}, {"rang": "-", "nom": "SIMON", "bp": 3, "bpms": 13, "mp": 16, "pts": 22}, {"rang": "-", "nom": "ELISE", "bp": 3, "bpms": 13, "mp": 16, "pts": 22}, {"rang": 13, "nom": "ANGELIQUE", "bp": 3, "bpms": 12, "mp": 17, "pts": 21}, {"rang": 14, "nom": "JULIETTE", "bp": 3, "bpms": 11, "mp": 14, "pts": 20}, {"rang": "-", "nom": "DAVID", "bp": 1, "bpms": 17, "mp": 14, "pts": 20}, {"rang": 16, "nom": "EMILIE", "bp": 2, "bpms": 13, "mp": 17, "pts": 19}, {"rang": 17, "nom": "RAMON", "bp": 1, "bpms": 15, "mp": 16, "pts": 18}, {"rang": 18, "nom": "THOMAS", "bp": 2, "bpms": 10, "mp": 20, "pts": 16}, {"rang": 19, "nom": "LAURINE", "bp": 1, "bpms": 12, "mp": 19, "pts": 15}];
+const RECIPIENT = "afchain.cedric@gmail.com";
+const players = ["SIMON","LAURINE","ALEX","FRED","MARIA","ELISE","ROMU","DELPHINE","OPHELIE","ANGELIQUE","CEDRIC","EMILIE","CARO","DAVID","THOMAS","RAMON","EMMANUEL","JULIETTE","GAELLE"];
 
-const tbody = document.getElementById('classement-body');
-data.forEach((d, i) => {
-  const tr = document.createElement('tr');
-  if (i === 0) tr.classList.add('top1');
-  else if (i === 1) tr.classList.add('top2');
-  else if (i === 2) tr.classList.add('top3');
-  tr.innerHTML = `
-    <td><span class="jersey">${d.rang}</span></td>
-    <td class="name">${d.nom}</td>
-    <td class="num">${d.bp}</td>
-    <td class="num">${d.bpms}</td>
-    <td class="num">${d.mp}</td>
-    <td class="pts">${d.pts}</td>
+const matches = [
+  {g:"A", home:"Tchéquie", away:"Mexique"},
+  {g:"A", home:"Afrique du Sud", away:"Corée du Sud"},
+  {g:"B", home:"Suisse", away:"Canada"},
+  {g:"B", home:"Bosnie-Herzégovine", away:"Qatar"},
+  {g:"C", home:"Écosse", away:"Brésil"},
+  {g:"C", home:"Maroc", away:"Haïti"},
+  {g:"D", home:"Turquie", away:"États-Unis"},
+  {g:"D", home:"Paraguay", away:"Australie"},
+  {g:"E", home:"Équateur", away:"Allemagne"},
+  {g:"E", home:"Curaçao", away:"Côte d'Ivoire"},
+  {g:"F", home:"Japon", away:"Suède"},
+  {g:"F", home:"Tunisie", away:"Pays-Bas"},
+  {g:"G", home:"Égypte", away:"Iran"},
+  {g:"G", home:"Nouvelle-Zélande", away:"Belgique"},
+  {g:"H", home:"Cap-Vert", away:"Arabie Saoudite"},
+  {g:"H", home:"Uruguay", away:"Espagne"},
+  {g:"I", home:"Norvège", away:"France"},
+  {g:"I", home:"Sénégal", away:"Irak"},
+  {g:"J", home:"Algérie", away:"Autriche"},
+  {g:"J", home:"Jordanie", away:"Argentine"},
+  {g:"K", home:"Colombie", away:"Portugal"},
+  {g:"K", home:"RD Congo", away:"Ouzbékistan"},
+  {g:"L", home:"Panama", away:"Angleterre"},
+  {g:"L", home:"Croatie", away:"Ghana"},
+];
+
+const playerSelect = document.getElementById('playerSelect');
+players.forEach(p => {
+  const opt = document.createElement('option');
+  opt.value = p;
+  opt.textContent = p.charAt(0) + p.slice(1).toLowerCase();
+  playerSelect.appendChild(opt);
+});
+
+const form = document.getElementById('predForm');
+let currentGroup = null;
+matches.forEach((m, i) => {
+  if (m.g !== currentGroup) {
+    currentGroup = m.g;
+    const title = document.createElement('div');
+    title.className = 'journee-title';
+    title.textContent = 'Groupe ' + m.g;
+    form.appendChild(title);
+  }
+  const card = document.createElement('div');
+  card.className = 'match-card';
+  card.innerHTML = `
+    <div class="match-group-row">
+      <div class="match-group">${m.g}</div>
+      <div class="match-teams-row">
+        <span class="team-name home">${m.home}</span>
+        <div class="score-inputs">
+          <input type="number" min="0" max="20" class="score-input" data-idx="${i}" data-side="h" inputmode="numeric">
+          <span class="score-dash">—</span>
+          <input type="number" min="0" max="20" class="score-input" data-idx="${i}" data-side="a" inputmode="numeric">
+        </div>
+        <span class="team-name away">${m.away}</span>
+      </div>
+    </div>
   `;
-  tbody.appendChild(tr);
+  form.appendChild(card);
+});
+
+document.getElementById('submitBtn').addEventListener('click', () => {
+  const statusMsg = document.getElementById('statusMsg');
+  statusMsg.className = 'status-msg';
+  const player = playerSelect.value;
+
+  document.querySelectorAll('.score-input').forEach(el => el.classList.remove('error'));
+
+  if (!player) {
+    statusMsg.textContent = "Merci de sélectionner ton prénom avant d'envoyer.";
+    statusMsg.classList.add('show', 'err');
+    playerSelect.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  let allFilled = true;
+  const lines = [];
+  matches.forEach((m, i) => {
+    const hEl = document.querySelector(`.score-input[data-idx="${i}"][data-side="h"]`);
+    const aEl = document.querySelector(`.score-input[data-idx="${i}"][data-side="a"]`);
+    const h = hEl.value, a = aEl.value;
+    if (h === '' || a === '') {
+      allFilled = false;
+      hEl.classList.toggle('error', h === '');
+      aEl.classList.toggle('error', a === '');
+    } else {
+      lines.push(`${m.g} | ${m.home} ${h} - ${a} ${m.away}`);
+    }
+  });
+
+  if (!allFilled) {
+    statusMsg.textContent = "Il manque encore quelques scores — merci de tout compléter avant d'envoyer.";
+    statusMsg.classList.add('show', 'err');
+    document.querySelector('.score-input.error').scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  const subject = `Pronostics 3eme journee - ${player}`;
+  const body = `Pronostics de ${player} pour la 3eme journee :\n\n` + lines.join('\n');
+  const mailto = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  statusMsg.textContent = "Ton appli mail va s'ouvrir avec tes réponses pré-remplies — il ne reste plus qu'à appuyer sur Envoyer !";
+  statusMsg.classList.add('show', 'ok');
+  window.location.href = mailto;
 });
 </script>
 </body>
