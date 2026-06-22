@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Classement Pronostics CDM 2026 — Notaires CVBL</title>
+<title>Statistiques — Notaires CVBL CDM 2026</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Oswald:wght@400;500;600;700&display=swap');
 
@@ -12,10 +12,9 @@
     --navy-deep: #000F42;
     --pitch: #0B4D32;
     --pitch-light: #0F6B45;
-    --chalk: #F4F6F2;
     --gold: #D9A441;
-    --line: rgba(255,255,255,0.16);
     --ink: #0C1320;
+    --card-line: #eef0f4;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -32,222 +31,116 @@
     min-height: 100vh;
   }
 
-  /* ---------- HERO / PITCH BANNER ---------- */
   .pitch-banner {
     position: relative;
-    background:
-      repeating-linear-gradient(
-        90deg,
-        var(--pitch) 0px,
-        var(--pitch) 64px,
-        var(--pitch-light) 64px,
-        var(--pitch-light) 128px
-      );
-    padding: 46px 20px 64px;
+    background: repeating-linear-gradient(90deg, var(--pitch) 0px, var(--pitch) 64px, var(--pitch-light) 64px, var(--pitch-light) 128px);
+    padding: 40px 20px 56px;
     overflow: hidden;
   }
   .pitch-banner::before {
-    /* center circle */
-    content: "";
-    position: absolute;
-    width: 340px;
-    height: 340px;
-    border: 2px solid rgba(255,255,255,0.35);
-    border-radius: 50%;
-    top: -170px;
-    right: -90px;
+    content: ""; position: absolute;
+    width: 320px; height: 320px;
+    border: 2px solid rgba(255,255,255,0.35); border-radius: 50%;
+    top: -160px; right: -80px;
   }
   .pitch-banner::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 6px;
-    background: var(--gold);
+    content: ""; position: absolute;
+    left: 0; right: 0; bottom: 0; height: 6px; background: var(--gold);
   }
-  .trophy-watermark {
-    position: absolute;
-    right: -10px;
-    bottom: -18px;
-    width: 190px;
-    opacity: 0.16;
-    z-index: 1;
-    pointer-events: none;
-  }
-
   .top-row {
-    position: relative;
-    z-index: 2;
-    max-width: 760px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 22px;
+    position: relative; z-index: 2;
+    max-width: 880px; margin: 0 auto;
+    display: flex; align-items: center; gap: 20px;
   }
   .logo-disc {
-    flex: 0 0 auto;
-    width: 92px;
-    height: 92px;
-    background: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
-    padding: 10px;
+    flex: 0 0 auto; width: 78px; height: 78px;
+    background: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.35); padding: 9px;
   }
   .logo-disc img { width: 100%; height: 100%; object-fit: contain; }
-
   .title-block { color: #fff; }
-  .eyebrow {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.74rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    font-size: 2rem;
-    line-height: 1.08;
-    margin: 0 0 6px;
-  }
+  .eyebrow { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 4px; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.7rem; line-height: 1.1; margin: 0 0 5px; }
   h1 em { font-style: italic; color: var(--gold); }
-  .office {
-    font-size: 0.92rem;
-    color: rgba(255,255,255,0.78);
-    font-weight: 400;
-    letter-spacing: 0.3px;
+  .office { font-size: 0.85rem; color: rgba(255,255,255,0.78); }
+  .nav-pill { position: relative; z-index: 2; max-width: 880px; margin: 22px auto 0; display: flex; gap: 10px; flex-wrap: wrap; }
+  .nav-pill a {
+    text-decoration: none; background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.35); color: #fff;
+    padding: 7px 16px; border-radius: 30px; font-size: 0.78rem; letter-spacing: 0.4px;
+  }
+  .nav-pill a.active { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); font-weight: 600; }
+
+  .wrap { max-width: 880px; margin: -28px auto 0; padding: 0 20px 60px; position: relative; z-index: 3; }
+
+  .section-title {
+    color: var(--gold); font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 2px; font-weight: 600; margin: 26px 4px 10px;
   }
 
-  .ball-row {
-    position: relative;
-    z-index: 2;
-    max-width: 760px;
-    margin: 26px auto 0;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .ball {
-    width: 30px; height: 30px; flex: 0 0 auto;
-    animation: roll 7s linear infinite;
-  }
-  @keyframes roll { to { transform: rotate(360deg); } }
-  .dash {
-    flex: 1;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.55) 0 10px, transparent 10px 20px);
-  }
-  .updated-pill {
-    flex: 0 0 auto;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.35);
-    color: #fff;
-    padding: 7px 16px;
-    border-radius: 30px;
-    font-size: 0.78rem;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-  }
-  .updated-pill b { color: var(--gold); }
-
-  /* ---------- TABLE SECTION ---------- */
-  .wrap {
-    max-width: 760px;
-    margin: -34px auto 0;
-    padding: 0 20px 60px;
-    position: relative;
-    z-index: 3;
-  }
   .card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 18px 40px rgba(0,16,60,0.18);
-    overflow: hidden;
-    border: 1px solid #e9ebf0;
+    background: #fff; border-radius: 14px; border: 1px solid #e9ebf0;
+    box-shadow: 0 10px 26px rgba(0,16,60,0.14); overflow: hidden; margin-bottom: 12px;
   }
   .card-head {
-    padding: 22px 24px 14px;
-    border-bottom: 1px solid #eef0f4;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    padding: 16px 20px 12px; border-bottom: 1px solid #eef0f4;
+    display: flex; align-items: baseline; justify-content: space-between;
   }
-  .card-head h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    margin: 0;
-    color: var(--navy);
-  }
-  .card-head span {
-    font-size: 0.72rem;
-    color: #8b93a3;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+  .card-head h2 { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin: 0; color: var(--navy); }
+  .card-head span { font-size: 0.7rem; color: #8b93a3; text-transform: uppercase; letter-spacing: 1px; }
 
-  table { width: 100%; border-collapse: collapse; }
-  thead th {
-    text-align: left;
-    padding: 10px 24px;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #8b93a3;
-    font-weight: 600;
-    background: #fafbfd;
+  /* Kpi grid */
+  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+  .kpi {
+    background: #fff; border-radius: 14px; border: 1px solid #e9ebf0;
+    box-shadow: 0 6px 18px rgba(0,16,60,0.08);
+    padding: 18px 16px; text-align: center;
   }
-  thead th.num-h { text-align: right; }
-  tbody td {
-    padding: 13px 24px;
-    border-top: 1px solid #f1f2f6;
-    font-size: 0.95rem;
-  }
-  tbody tr:hover { background: #f7f9ff; }
+  .kpi-val { font-size: 2rem; font-weight: 700; color: var(--navy); line-height: 1; }
+  .kpi-val.gold { color: var(--gold); }
+  .kpi-label { font-size: 0.72rem; color: #8b93a3; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 5px; }
 
-  .jersey {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    background: var(--navy);
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.82rem;
-    font-family: 'Oswald', sans-serif;
-  }
-  tr.top1 .jersey { background: var(--gold); color: var(--navy-deep); }
-  tr.top2 .jersey { background: #B9C2D0; color: var(--navy-deep); }
-  tr.top3 .jersey { background: #C8895A; color: #fff; }
+  /* Bar chart players */
+  .bar-row { padding: 10px 20px; border-bottom: 1px solid #f1f2f6; display: flex; align-items: center; gap: 12px; }
+  .bar-row:last-child { border-bottom: none; }
+  .bar-name { flex: 0 0 90px; font-weight: 600; color: var(--navy); font-size: 0.82rem; }
+  .bar-wrap { flex: 1; background: #f1f4fb; border-radius: 20px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 20px; background: var(--navy); transition: width 0.6s ease; }
+  .bar-fill.gold { background: var(--gold); }
+  .bar-fill.green { background: #0B4D32; }
+  .bar-val { flex: 0 0 38px; text-align: right; font-weight: 700; color: var(--navy); font-size: 0.85rem; }
 
-  .name { font-weight: 600; color: var(--navy); letter-spacing: 0.2px; }
-  .num { text-align: right; color: #98a0b0; font-variant-numeric: tabular-nums; }
-  .pts {
-    text-align: right;
-    font-weight: 700;
-    color: var(--navy);
-    font-size: 1.02rem;
-    font-variant-numeric: tabular-nums;
+  /* Match cards */
+  .match-stat { padding: 11px 20px; border-bottom: 1px solid #f1f2f6; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .match-stat:last-child { border-bottom: none; }
+  .match-stat-name { font-weight: 600; color: var(--navy); font-size: 0.85rem; flex: 1; }
+  .match-stat-badge {
+    flex: 0 0 auto; padding: 3px 10px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700;
   }
+  .badge-gold { background: #FDF3DC; color: #9A6D00; }
+  .badge-red { background: #FDE8E8; color: #9A1C1C; }
+  .badge-blue { background: #EBF0FF; color: var(--navy); }
 
-  footer {
-    text-align: center;
-    color: rgba(255,255,255,0.55);
-    font-size: 0.74rem;
-    margin-top: 20px;
-    letter-spacing: 0.3px;
-  }
+  /* Journee comparison */
+  .jcomp { display: grid; grid-template-columns: 1fr 1fr; }
+  .jcomp-col { padding: 16px 20px; }
+  .jcomp-col:first-child { border-right: 1px solid #eef0f4; }
+  .jcomp-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #8b93a3; margin-bottom: 10px; font-weight: 600; }
+  .jcomp-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #eef0f4; font-size: 0.82rem; }
+  .jcomp-row:last-child { border-bottom: none; }
+  .jcomp-name { color: var(--navy); font-weight: 500; }
+  .jcomp-pts { font-weight: 700; color: var(--gold); }
+
+  footer { text-align: center; color: rgba(255,255,255,0.55); font-size: 0.74rem; margin-top: 26px; }
   footer .firm { color: var(--gold); font-weight: 600; }
 
-  @media (max-width: 480px) {
-    h1 { font-size: 1.5rem; }
-    .logo-disc { width: 70px; height: 70px; }
-    thead th, tbody td { padding: 10px 12px; }
-    .card-head { padding: 18px 14px 12px; }
+  @media (max-width: 520px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .jcomp { grid-template-columns: 1fr; }
+    .jcomp-col:first-child { border-right: none; border-bottom: 1px solid #eef0f4; }
+    .bar-name { flex: 0 0 70px; font-size: 0.76rem; }
   }
 </style>
 </head>
@@ -260,105 +153,155 @@
     </div>
     <div class="title-block">
       <div class="eyebrow">Pronostics entre amis</div>
-      <h1>Classement <em>Coupe du Monde</em> 2026</h1>
+      <h1>Les <em>statistiques</em></h1>
       <div class="office">Notaires CVBL — Corbie · Villers-Bretonneux · Longueau</div>
     </div>
   </div>
-
-  <svg class="trophy-watermark" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-    <rect x="70" y="206" width="60" height="14" rx="3" fill="#fff"/>
-    <rect x="85" y="190" width="30" height="20" fill="#fff"/>
-    <path d="M60 60 H140 V110 C140 145 116 168 100 168 C84 168 60 145 60 110 Z" fill="#fff"/>
-    <path d="M60 70 C30 70 22 100 38 118 C48 130 60 132 64 130 C50 118 48 90 56 76 Z" fill="#fff"/>
-    <path d="M140 70 C170 70 178 100 162 118 C152 130 140 132 136 130 C150 118 152 90 144 76 Z" fill="#fff"/>
-    <rect x="56" y="46" width="88" height="18" rx="4" fill="#fff"/>
-    <path d="M100 90 L106 104 L121 104 L109 113 L114 128 L100 119 L86 128 L91 113 L79 104 L94 104 Z" fill="#001B72" opacity="0.55"/>
-  </svg>
-
-  <div class="ball-row">
-    <svg class="ball" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="46" fill="#fff" stroke="#111" stroke-width="3"/>
-      <polygon points="50,22 64,32 59,49 41,49 36,32" fill="#111"/>
-      <polygon points="50,22 64,32 78,28 74,12" fill="none" stroke="#111" stroke-width="2.5"/>
-      <polygon points="50,22 36,32 22,28 26,12" fill="none" stroke="#111" stroke-width="2.5"/>
-      <polygon points="64,32 59,49 76,60 86,46" fill="none" stroke="#111" stroke-width="2.5"/>
-      <polygon points="36,32 41,49 24,60 14,46" fill="none" stroke="#111" stroke-width="2.5"/>
-      <polygon points="41,49 59,49 64,66 50,78 36,66" fill="none" stroke="#111" stroke-width="2.5"/>
-    </svg>
-    <div class="dash"></div>
-    <div class="updated-pill">Dernier match : <b>Uruguay 2 - 2 Cap-Vert</b></div>
-  </div>
-
-  <div class="nav-pill" style="position:relative;z-index:2;max-width:760px;margin:18px auto 0;display:flex;gap:10px;flex-wrap:wrap;">
-    <a href="index.html" style="text-decoration:none;background:var(--gold);color:var(--navy-deep);border:1px solid var(--gold);padding:7px 16px;border-radius:30px;font-size:0.78rem;font-weight:600;">Classement</a>
-    <a href="pronostics.html" style="text-decoration:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);color:#fff;padding:7px 16px;border-radius:30px;font-size:0.78rem;">Pronostics par match</a>
-    <a href="pronostics-formulaire.html" style="text-decoration:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);color:#fff;padding:7px 16px;border-radius:30px;font-size:0.78rem;">Remplir mes pronostics</a>
-    <a href="statistiques.html" style="text-decoration:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);color:#fff;padding:7px 16px;border-radius:30px;font-size:0.78rem;">Statistiques</a>
-  </div>
-
-  <div style="position:relative;z-index:2;max-width:760px;margin:18px auto 0;padding:0 4px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-      <span style="color:rgba(255,255,255,0.75);font-size:0.75rem;letter-spacing:0.5px;text-transform:uppercase;">Avancement du tournoi</span>
-      <span style="color:var(--gold);font-weight:700;font-size:0.9rem;">40 <span style="color:rgba(255,255,255,0.5);font-weight:400;">/ 104 matchs joués</span></span>
-    </div>
-    <div style="background:rgba(255,255,255,0.12);border-radius:20px;height:8px;overflow:hidden;">
-      <div style="background:var(--gold);height:100%;border-radius:20px;width:38.5%;transition:width 0.4s ease;"></div>
-    </div>
+  <div class="nav-pill">
+    <a href="index.html">Classement</a>
+    <a href="pronostics.html">Pronostics par match</a>
+    <a href="pronostics-formulaire.html">Remplir mes pronostics</a>
+    <a href="statistiques.html" class="active">Statistiques</a>
   </div>
 </div>
 
-<div class="wrap">
+<div class="wrap" id="content">
+
+  <!-- KPIs -->
+  <div class="section-title">Vue d'ensemble</div>
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <!-- Scores exacts par joueur -->
+  <div class="section-title">🎯 Scores exacts par joueur</div>
   <div class="card">
-    <div class="card-head" style="flex-direction:column;align-items:flex-start;gap:2px;">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;width:100%;">
-        <h2>Classement général</h2>
-        <span>BP · BPMS · MP</span>
-      </div>
-      <span style="font-size:0.7rem;color:#b3bac8;text-transform:none;letter-spacing:0.2px;">Mis à jour le 22/06/2026 à 10h30</span>
+    <div class="card-head">
+      <h2>Nombre de scores exacts</h2>
+      <span>sur 40 matchs</span>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Rang</th>
-          <th>Joueur</th>
-          <th class="num-h">BP</th>
-          <th class="num-h">BPMS</th>
-          <th class="num-h">MP</th>
-          <th class="num-h">Pts</th>
-        </tr>
-      </thead>
-      <tbody id="classement-body"></tbody>
-    </table>
+    <div id="exactBars"></div>
   </div>
-  <footer>
-    Mis à jour automatiquement à partir des pronostics — <span class="firm">Notaires CVBL</span>
-  </footer>
 
-  <div style="text-align:center;margin-top:18px;">
-    <a href="grille-j3.pdf" download style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--gold);color:var(--navy-deep);font-weight:600;padding:10px 22px;border-radius:30px;font-size:0.85rem;letter-spacing:0.3px;box-shadow:0 6px 16px rgba(0,0,0,0.25);">
-      ⬇ Télécharger la grille — 3ème journée
-    </a>
+  <!-- Vainqueurs bien prédits -->
+  <div class="section-title">✅ Vainqueurs bien prédits</div>
+  <div class="card">
+    <div class="card-head">
+      <h2>Résultat correct (victoire/nul)</h2>
+      <span>score exact inclus</span>
+    </div>
+    <div id="winBars"></div>
   </div>
+
+  <!-- Meilleurs par journée -->
+  <div class="section-title">📅 Meilleurs par journée</div>
+  <div class="card">
+    <div class="card-head"><h2>Points marqués par journée</h2><span>top 5</span></div>
+    <div class="jcomp" id="jcomp"></div>
+  </div>
+
+  <!-- Matchs les mieux pronostiqués -->
+  <div class="section-title">⭐ Matchs les mieux pronostiqués</div>
+  <div class="card" id="bestMatches">
+    <div class="card-head"><h2>Plus de scores exacts</h2><span>top 5</span></div>
+  </div>
+
+  <!-- Matchs où tout le monde s'est planté -->
+  <div class="section-title">💥 Les surprises du tournoi</div>
+  <div class="card" id="worstMatches">
+    <div class="card-head"><h2>Matchs où personne n'a trouvé le bon vainqueur</h2><span>top 5</span></div>
+  </div>
+
 </div>
+
+<footer>Statistiques calculées sur les matchs joués — <span class="firm">Notaires CVBL</span></footer>
 
 <script>
-const data = [{"rang": 1, "nom": "CEDRIC", "bp": 8, "bpms": 16, "mp": 16, "pts": 40}, {"rang": 2, "nom": "FRED", "bp": 6, "bpms": 19, "mp": 15, "pts": 37}, {"rang": 3, "nom": "EMMANUEL", "bp": 6, "bpms": 16, "mp": 18, "pts": 34}, {"rang": 4, "nom": "ALEX", "bp": 4, "bpms": 19, "mp": 17, "pts": 31}, {"rang": 5, "nom": "SIMON", "bp": 5, "bpms": 15, "mp": 20, "pts": 30}, {"rang": "-", "nom": "CARO", "bp": 5, "bpms": 15, "mp": 20, "pts": 30}, {"rang": "-", "nom": "GAELLE", "bp": 4, "bpms": 18, "mp": 18, "pts": 30}, {"rang": 8, "nom": "DELPHINE", "bp": 4, "bpms": 17, "mp": 19, "pts": 29}, {"rang": "-", "nom": "ROMU", "bp": 3, "bpms": 20, "mp": 17, "pts": 29}, {"rang": 10, "nom": "OPHELIE", "bp": 5, "bpms": 12, "mp": 23, "pts": 27}, {"rang": 11, "nom": "MARIA", "bp": 3, "bpms": 17, "mp": 20, "pts": 26}, {"rang": "-", "nom": "ELISE", "bp": 3, "bpms": 17, "mp": 20, "pts": 26}, {"rang": 13, "nom": "ANGELIQUE", "bp": 3, "bpms": 16, "mp": 21, "pts": 25}, {"rang": "-", "nom": "JULIETTE", "bp": 3, "bpms": 16, "mp": 17, "pts": 25}, {"rang": 15, "nom": "THOMAS", "bp": 3, "bpms": 15, "mp": 22, "pts": 24}, {"rang": "-", "nom": "EMILIE", "bp": 2, "bpms": 18, "mp": 20, "pts": 24}, {"rang": 17, "nom": "DAVID", "bp": 1, "bpms": 20, "mp": 19, "pts": 23}, {"rang": 18, "nom": "RAMON", "bp": 1, "bpms": 19, "mp": 20, "pts": 22}, {"rang": 19, "nom": "LAURINE", "bp": 1, "bpms": 16, "mp": 23, "pts": 19}];
+const statsData = {"SIMON": {"exact": 5, "vainqueur": 15, "nul_ok": 0, "total": 40, "j1_pts": 15, "j2_pts": 15}, "LAURINE": {"exact": 1, "vainqueur": 16, "nul_ok": 0, "total": 40, "j1_pts": 13, "j2_pts": 6}, "ALEX": {"exact": 4, "vainqueur": 19, "nul_ok": 0, "total": 40, "j1_pts": 16, "j2_pts": 15}, "FRED": {"exact": 6, "vainqueur": 19, "nul_ok": 0, "total": 40, "j1_pts": 22, "j2_pts": 15}, "MARIA": {"exact": 3, "vainqueur": 17, "nul_ok": 0, "total": 40, "j1_pts": 18, "j2_pts": 8}, "ELISE": {"exact": 3, "vainqueur": 17, "nul_ok": 0, "total": 40, "j1_pts": 13, "j2_pts": 13}, "ROMU": {"exact": 3, "vainqueur": 20, "nul_ok": 0, "total": 40, "j1_pts": 14, "j2_pts": 15}, "DELPHINE": {"exact": 4, "vainqueur": 17, "nul_ok": 0, "total": 40, "j1_pts": 18, "j2_pts": 11}, "OPHELIE": {"exact": 5, "vainqueur": 12, "nul_ok": 0, "total": 40, "j1_pts": 16, "j2_pts": 11}, "ANGELIQUE": {"exact": 3, "vainqueur": 16, "nul_ok": 0, "total": 40, "j1_pts": 18, "j2_pts": 7}, "CEDRIC": {"exact": 8, "vainqueur": 16, "nul_ok": 0, "total": 40, "j1_pts": 23, "j2_pts": 17}, "EMILIE": {"exact": 2, "vainqueur": 18, "nul_ok": 0, "total": 40, "j1_pts": 12, "j2_pts": 12}, "CARO": {"exact": 5, "vainqueur": 15, "nul_ok": 0, "total": 40, "j1_pts": 18, "j2_pts": 12}, "DAVID": {"exact": 1, "vainqueur": 20, "nul_ok": 0, "total": 40, "j1_pts": 15, "j2_pts": 8}, "THOMAS": {"exact": 3, "vainqueur": 15, "nul_ok": 0, "total": 40, "j1_pts": 11, "j2_pts": 13}, "RAMON": {"exact": 1, "vainqueur": 19, "nul_ok": 0, "total": 40, "j1_pts": 11, "j2_pts": 11}, "EMMANUEL": {"exact": 6, "vainqueur": 16, "nul_ok": 0, "total": 40, "j1_pts": 24, "j2_pts": 10}, "JULIETTE": {"exact": 3, "vainqueur": 16, "nul_ok": 0, "total": 36, "j1_pts": 16, "j2_pts": 9}, "GAELLE": {"exact": 4, "vainqueur": 18, "nul_ok": 0, "total": 40, "j1_pts": 15, "j2_pts": 15}};
+const matchStats = [{"match": "Mexique 2-0 Afrique du Sud", "exact": 12, "miss": 2, "pred_count": 19, "journee": 1}, {"match": "Corée du Sud 2-1 Tchéquie", "exact": 4, "miss": 12, "pred_count": 19, "journee": 1}, {"match": "Canada 1-1 Bosnie-Herzégovine", "exact": 4, "miss": 13, "pred_count": 19, "journee": 1}, {"match": "Qatar 1-1 Suisse", "exact": 1, "miss": 18, "pred_count": 19, "journee": 1}, {"match": "Brésil 1-1 Maroc", "exact": 5, "miss": 13, "pred_count": 19, "journee": 1}, {"match": "Haïti 0-1 Écosse", "exact": 2, "miss": 2, "pred_count": 19, "journee": 1}, {"match": "États-Unis 4-1 Paraguay", "exact": 0, "miss": 6, "pred_count": 19, "journee": 1}, {"match": "Australie 2-0 Turquie", "exact": 1, "miss": 18, "pred_count": 19, "journee": 1}, {"match": "Allemagne 7-1 Curaçao", "exact": 0, "miss": 0, "pred_count": 19, "journee": 1}, {"match": "Côte d'Ivoire 1-0 Équateur", "exact": 1, "miss": 13, "pred_count": 19, "journee": 1}, {"match": "Pays-Bas 2-2 Japon", "exact": 0, "miss": 17, "pred_count": 19, "journee": 1}, {"match": "Suède 5-1 Tunisie", "exact": 0, "miss": 6, "pred_count": 19, "journee": 1}, {"match": "Belgique 1-1 Égypte", "exact": 1, "miss": 18, "pred_count": 19, "journee": 1}, {"match": "Iran 2-2 Nouvelle-Zélande", "exact": 0, "miss": 16, "pred_count": 19, "journee": 1}, {"match": "Espagne 0-0 Cap-Vert", "exact": 0, "miss": 19, "pred_count": 19, "journee": 1}, {"match": "Arabie Saoudite 1-1 Uruguay", "exact": 1, "miss": 18, "pred_count": 19, "journee": 1}, {"match": "France 3-1 Sénégal", "exact": 3, "miss": 2, "pred_count": 19, "journee": 1}, {"match": "Irak 1-4 Norvège", "exact": 0, "miss": 3, "pred_count": 19, "journee": 1}, {"match": "Argentine 3-0 Algérie", "exact": 2, "miss": 3, "pred_count": 19, "journee": 1}, {"match": "Autriche 3-1 Jordanie", "exact": 0, "miss": 1, "pred_count": 19, "journee": 1}, {"match": "Portugal 1-1 RD Congo", "exact": 0, "miss": 19, "pred_count": 19, "journee": 1}, {"match": "Ouzbékistan 1-3 Colombie", "exact": 1, "miss": 1, "pred_count": 19, "journee": 1}, {"match": "Angleterre 4-2 Croatie", "exact": 0, "miss": 8, "pred_count": 19, "journee": 1}, {"match": "Ghana 1-0 Panama", "exact": 5, "miss": 6, "pred_count": 19, "journee": 1}, {"match": "Tchéquie 1-1 Afrique du Sud", "exact": 3, "miss": 15, "pred_count": 18, "journee": 2}, {"match": "Mexique 1-0 Corée du Sud", "exact": 3, "miss": 5, "pred_count": 18, "journee": 2}, {"match": "Suisse 4-1 Bosnie-Herzégovine", "exact": 0, "miss": 0, "pred_count": 18, "journee": 2}, {"match": "Canada 6-0 Qatar", "exact": 0, "miss": 6, "pred_count": 18, "journee": 2}, {"match": "Écosse 0-1 Maroc", "exact": 1, "miss": 8, "pred_count": 19, "journee": 2}, {"match": "Brésil 3-0 Haïti", "exact": 9, "miss": 1, "pred_count": 19, "journee": 2}, {"match": "États-Unis 2-0 Australie", "exact": 4, "miss": 7, "pred_count": 19, "journee": 2}, {"match": "Turquie 0-1 Paraguay", "exact": 1, "miss": 18, "pred_count": 19, "journee": 2}, {"match": "Allemagne 2-1 Côte d'Ivoire", "exact": 3, "miss": 1, "pred_count": 19, "journee": 2}, {"match": "Équateur 0-0 Curaçao", "exact": 2, "miss": 16, "pred_count": 19, "journee": 2}, {"match": "Pays-Bas 5-1 Suède", "exact": 0, "miss": 8, "pred_count": 19, "journee": 2}, {"match": "Tunisie 0-4 Japon", "exact": 0, "miss": 5, "pred_count": 19, "journee": 2}, {"match": "Belgique 0-0 Iran", "exact": 0, "miss": 19, "pred_count": 19, "journee": 2}, {"match": "Nouvelle-Zélande 1-3 Égypte", "exact": 0, "miss": 4, "pred_count": 19, "journee": 2}, {"match": "Espagne 4-0 Arabie Saoudite", "exact": 1, "miss": 0, "pred_count": 19, "journee": 2}, {"match": "Uruguay 2-2 Cap-Vert", "exact": 0, "miss": 18, "pred_count": 19, "journee": 2}];
+const players = ["SIMON", "LAURINE", "ALEX", "FRED", "MARIA", "ELISE", "ROMU", "DELPHINE", "OPHELIE", "ANGELIQUE", "CEDRIC", "EMILIE", "CARO", "DAVID", "THOMAS", "RAMON", "EMMANUEL", "JULIETTE", "GAELLE"];
+const matchesPlayed = 40;
 
-const tbody = document.getElementById('classement-body');
-data.forEach((d, i) => {
-  const tr = document.createElement('tr');
-  if (i === 0) tr.classList.add('top1');
-  else if (i === 1) tr.classList.add('top2');
-  else if (i === 2) tr.classList.add('top3');
-  tr.innerHTML = `
-    <td><span class="jersey">${d.rang}</span></td>
-    <td class="name">${d.nom}</td>
-    <td class="num">${d.bp}</td>
-    <td class="num">${d.bpms}</td>
-    <td class="num">${d.mp}</td>
-    <td class="pts">${d.pts}</td>
+// KPIs
+const totalExact = Object.values(statsData).reduce((s,p) => s + p.exact, 0);
+const totalWin = Object.values(statsData).reduce((s,p) => s + p.vainqueur, 0);
+const bestExact = Math.max(...Object.values(statsData).map(p => p.exact));
+const bestPlayer = Object.entries(statsData).find(([,p]) => p.exact === bestExact)?.[0] || '';
+const kpiGrid = document.getElementById('kpiGrid');
+[
+  {val: matchesPlayed, label: 'Matchs joués', cls: ''},
+  {val: totalExact, label: 'Scores exacts au total', cls: 'gold'},
+  {val: bestExact + ' (' + bestPlayer.charAt(0)+bestPlayer.slice(1).toLowerCase() + ')', label: 'Record de scores exacts', cls: 'gold'},
+].forEach(k => {
+  const div = document.createElement('div');
+  div.className = 'kpi';
+  div.innerHTML = `<div class="kpi-val ${k.cls}">${k.val}</div><div class="kpi-label">${k.label}</div>`;
+  kpiGrid.appendChild(div);
+});
+
+// Exact bars
+const sortedExact = [...players].sort((a,b) => (statsData[b]?.exact||0) - (statsData[a]?.exact||0));
+const maxExact = Math.max(...sortedExact.map(p => statsData[p]?.exact||0));
+const exactBars = document.getElementById('exactBars');
+sortedExact.forEach((p, i) => {
+  const val = statsData[p]?.exact || 0;
+  const pct = maxExact ? (val/maxExact*100) : 0;
+  const div = document.createElement('div');
+  div.className = 'bar-row';
+  div.innerHTML = `
+    <span class="bar-name">${p.charAt(0)+p.slice(1).toLowerCase()}</span>
+    <div class="bar-wrap"><div class="bar-fill ${i===0?'gold':''}" style="width:${pct}%"></div></div>
+    <span class="bar-val">${val}</span>
   `;
-  tbody.appendChild(tr);
+  exactBars.appendChild(div);
+});
+
+// Win bars
+const sortedWin = [...players].sort((a,b) => {
+  const ta = (statsData[b]?.exact||0) + (statsData[b]?.vainqueur||0);
+  const tb = (statsData[a]?.exact||0) + (statsData[a]?.vainqueur||0);
+  return ta - tb;
+});
+const maxWin = Math.max(...sortedWin.map(p => (statsData[p]?.exact||0)+(statsData[p]?.vainqueur||0)));
+const winBars = document.getElementById('winBars');
+sortedWin.forEach((p, i) => {
+  const val = (statsData[p]?.exact||0) + (statsData[p]?.vainqueur||0);
+  const pct = maxWin ? (val/maxWin*100) : 0;
+  const div = document.createElement('div');
+  div.className = 'bar-row';
+  div.innerHTML = `
+    <span class="bar-name">${p.charAt(0)+p.slice(1).toLowerCase()}</span>
+    <div class="bar-wrap"><div class="bar-fill green ${i===0?'gold':''}" style="width:${pct}%;background:${i===0?'var(--gold)':'var(--pitch)'}"></div></div>
+    <span class="bar-val">${val}</span>
+  `;
+  winBars.appendChild(div);
+});
+
+// Par journée
+const jcomp = document.getElementById('jcomp');
+['j1_pts','j2_pts'].forEach((key, ji) => {
+  const sorted = [...players].sort((a,b) => (statsData[b]?.[key]||0) - (statsData[a]?.[key]||0)).slice(0,5);
+  const col = document.createElement('div');
+  col.className = 'jcomp-col';
+  col.innerHTML = `<div class="jcomp-title">${ji===0?'1ère journée':'2ème journée'}</div>` +
+    sorted.map((p,i) => `<div class="jcomp-row"><span class="jcomp-name">${i===0?'🥇 ':i===1?'🥈 ':i===2?'🥉 ':''}${p.charAt(0)+p.slice(1).toLowerCase()}</span><span class="jcomp-pts">${statsData[p]?.[key]||0} pts</span></div>`).join('');
+  jcomp.appendChild(col);
+});
+
+// Meilleurs matchs
+const bestMatches = document.getElementById('bestMatches');
+[...matchStats].sort((a,b)=>b.exact-a.exact).slice(0,5).forEach(m => {
+  const div = document.createElement('div');
+  div.className = 'match-stat';
+  div.innerHTML = `<span class="match-stat-name">${m.match}</span><span class="match-stat-badge badge-gold">⭐ ${m.exact} exacts</span>`;
+  bestMatches.appendChild(div);
+});
+
+// Pires matchs
+const worstMatches = document.getElementById('worstMatches');
+[...matchStats].sort((a,b)=>b.miss-a.miss).slice(0,5).forEach(m => {
+  const div = document.createElement('div');
+  div.className = 'match-stat';
+  div.innerHTML = `<span class="match-stat-name">${m.match}</span><span class="match-stat-badge badge-red">💥 ${m.miss} ratés</span>`;
+  worstMatches.appendChild(div);
 });
 </script>
 </body>
