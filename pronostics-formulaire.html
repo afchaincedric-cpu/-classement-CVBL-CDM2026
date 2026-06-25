@@ -57,7 +57,10 @@
   .score-dash { color:#b9c0cf; font-weight:600; }
   .send-btn { width:100%; border:none; font-family:'Oswald',sans-serif; font-weight:600; font-size:.9rem; padding:11px; border-radius:25px; cursor:pointer; letter-spacing:.3px; transition:all .2s; }
   .send-btn.default { background:var(--navy); color:#fff; }
-  .send-btn.default:hover { background:var(--gold); color:var(--navy-deep); }
+  .send-btn.mail-btn { flex:1; background:var(--navy); color:#fff; }
+  .send-btn.mail-btn:hover { background:var(--gold); color:var(--navy-deep); }
+  .send-btn.wa-btn { flex:1; background:#25D366; color:#fff; }
+  .send-btn.wa-btn:hover { background:#1ebe5d; }
   .send-btn.sent { background:#e7f3ec; color:#1a6b3c; border:1.5px solid #a8d5b5; cursor:default; }
   .resend { text-align:center; font-size:.72rem; color:#9aa3b5; margin-top:6px; }
   .resend a { color:#9aa3b5; cursor:pointer; text-decoration:underline; }
@@ -105,6 +108,7 @@
 
 <script>
 const RECIPIENT = "afchain.cedric@gmail.com";
+const WA_NUMBER = "33607483979";
 const qualifies = {"A": {"premier": "Mexique", "deuxieme": "Afrique du Sud"}, "B": {"premier": "Suisse", "deuxieme": "Canada"}, "C": {"premier": "Brésil", "deuxieme": "Maroc"}, "D": {"premier": "États-Unis", "deuxieme": null}, "E": {"premier": "Allemagne", "deuxieme": null}, "F": {"premier": null, "deuxieme": null}, "G": {"premier": null, "deuxieme": null}, "H": {"premier": null, "deuxieme": null}, "I": {"premier": null, "deuxieme": null}, "J": {"premier": "Argentine", "deuxieme": null}, "K": {"premier": null, "deuxieme": null}, "L": {"premier": null, "deuxieme": null}};
 const koMatches = [{"id": "r16_01", "phase": "16èmes de finale", "home": "Afrique du Sud", "away": "Canada", "date": "28/06/2026", "time": ""}];
 const players = ["SIMON", "LAURINE", "ALEX", "FRED", "MARIA", "ELISE", "ROMU", "DELPHINE", "OPHELIE", "ANGELIQUE", "CEDRIC", "EMILIE", "CARO", "DAVID", "THOMAS", "RAMON", "EMMANUEL", "JULIETTE", "GAELLE"];
@@ -153,9 +157,11 @@ koMatches.forEach(m => {
       </div>
       <span class="ko-team away">${m.away}</span>
     </div>
-    <button class="send-btn default" id="btn_${m.id}" onclick="sendPred('${m.id}','${m.home}','${m.away}')">
-      ⚽ Envoyer mon pronostic
-    </button>
+    <div class="btn-row" id="btns_${m.id}" style="display:flex;gap:8px;">
+      <button class="send-btn mail-btn" onclick="sendMail('${m.id}','${m.home}','${m.away}')">📧 Mail</button>
+      <button class="send-btn wa-btn" onclick="sendWA('${m.id}','${m.home}','${m.away}')">💬 WhatsApp</button>
+    </div>
+    <div class="send-btn sent" id="btn_${m.id}" style="display:none;text-align:center;"></div>
     <div class="resend" id="resend_${m.id}" style="display:none">
       <a onclick="resetPred('${m.id}')">Modifier / renvoyer</a>
     </div>
@@ -167,36 +173,50 @@ function refreshButtons() {
   const player = playerSelect.value;
   koMatches.forEach(m => {
     const btn = document.getElementById('btn_'+m.id);
+    const btns = document.getElementById('btns_'+m.id);
     const resend = document.getElementById('resend_'+m.id);
     const hInput = document.getElementById('h_'+m.id);
     const aInput = document.getElementById('a_'+m.id);
     if (player && hasSent(player, m.id)) {
       const saved = localStorage.getItem(storageKey(player, m.id));
-      btn.className = 'send-btn sent';
+      btn.style.display = 'block';
       btn.textContent = '✅ Pronostic envoyé — ' + saved;
-      btn.onclick = null;
+      btns.style.display = 'none';
       hInput.disabled = true; aInput.disabled = true;
       resend.style.display = 'block';
     } else {
-      btn.className = 'send-btn default';
-      btn.textContent = '⚽ Envoyer mon pronostic';
-      btn.onclick = () => sendPred(m.id, m.home, m.away);
+      btn.style.display = 'none';
+      btns.style.display = 'flex';
       hInput.disabled = false; aInput.disabled = false;
       resend.style.display = 'none';
     }
   });
 }
 
-function sendPred(id, home, away) {
+function checkInputs(id) {
   const player = playerSelect.value;
   const h = document.getElementById('h_'+id).value;
   const a = document.getElementById('a_'+id).value;
-  if (!player) { alert('Merci de sélectionner ton prénom !'); return; }
-  if (h === '' || a === '') { alert('Merci de remplir les deux scores !'); return; }
-  const scoreStr = home+' '+h+'-'+a+' '+away;
+  if (!player) { alert('Merci de sélectionner ton prénom !'); return null; }
+  if (h === '' || a === '') { alert('Merci de remplir les deux scores !'); return null; }
+  return {player, h, a};
+}
+
+function sendMail(id, home, away) {
+  const r = checkInputs(id); if (!r) return;
+  const {player, h, a} = r;
   const subject = `Pronostic ${id} - ${player}`;
-  const body = `Pronostic de ${player} :\n\n${scoreStr}`;
+  const body = `Pronostic de ${player} :\n\n${home} ${h}-${a} ${away}`;
   window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  markSent(player, id, h+'-'+a);
+  setTimeout(() => refreshButtons(), 800);
+}
+
+function sendWA(id, home, away) {
+  const r = checkInputs(id); if (!r) return;
+  const {player, h, a} = r;
+  const text = `Pronostic de ${player} :\n${home} ${h}-${a} ${away}`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
   markSent(player, id, h+'-'+a);
   setTimeout(() => refreshButtons(), 800);
 }
