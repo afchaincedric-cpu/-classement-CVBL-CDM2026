@@ -101,13 +101,28 @@
 
   .journee-block { margin-bottom: 22px; }
   .journee-title {
-    color: var(--gold);
-    font-size: 0.78rem;
+    color: #fff;
+    font-size: 0.82rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
-    margin: 26px 4px 10px;
+    margin: 14px 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 12px 16px;
+    transition: background 0.2s;
   }
+  .journee-title:hover { background: rgba(255,255,255,0.14); }
+  .journee-title .j-chevron { font-size: 0.9rem; transition: transform 0.25s; color: var(--gold); }
+  .journee-title.open { background: rgba(217,164,65,0.15); border-color: rgba(217,164,65,0.4); color: var(--gold); }
+  .journee-title.open .j-chevron { transform: rotate(180deg); }
+  .journee-body { overflow: hidden; transition: max-height 0.35s ease; }
+  .journee-body.collapsed { max-height: 0 !important; }
   .journee-block:first-child .journee-title { margin-top: 0; }
 
   .match-card {
@@ -279,17 +294,39 @@ function fmtDate(iso) {
 }
 
 Object.keys(byJournee).sort((a,b)=>a-b).forEach(j => {
+  const isCollapsed = parseInt(j) < 3; // J1 et J2 fermées par défaut
   const block = document.createElement('div');
   block.className = 'journee-block';
+
   const title = document.createElement('div');
-  title.className = 'journee-title';
-  title.textContent = journeeLabels[j] || ('Journée ' + j);
+  title.className = 'journee-title' + (isCollapsed ? '' : ' open');
+  const matchCount = byJournee[j].length;
+  title.innerHTML = `<span>${journeeLabels[j] || ('Journée ' + j)} <span style="color:rgba(255,255,255,0.5);font-size:0.7rem;font-weight:400;">(${matchCount} matchs)</span></span><span class="j-chevron">▾</span>`;
+
+  const body = document.createElement('div');
+  body.className = 'journee-body' + (isCollapsed ? ' collapsed' : '');
+  body.style.maxHeight = isCollapsed ? '0' : '9999px';
+
+  title.addEventListener('click', () => {
+    const collapsed = body.classList.contains('collapsed');
+    if (collapsed) {
+      body.classList.remove('collapsed');
+      body.style.maxHeight = body.scrollHeight + 'px';
+      title.classList.add('open');
+    } else {
+      body.classList.add('collapsed');
+      body.style.maxHeight = '0';
+      title.classList.remove('open');
+    }
+  });
+
   block.appendChild(title);
 
   byJournee[j].forEach((m, idx) => {
     const played = m.score_h !== null && m.score_a !== null;
     const card = document.createElement('div');
     card.className = 'match-card';
+    card.style.marginTop = idx === 0 ? '8px' : '';
 
     const row = document.createElement('div');
     row.className = 'match-row';
@@ -303,7 +340,13 @@ Object.keys(byJournee).sort((a,b)=>a-b).forEach(j => {
       <div class="match-meta">${fmtDate(m.date)} · ${m.time}</div>
       <div class="chevron">▾</div>
     `;
-    row.addEventListener('click', () => card.classList.toggle('open'));
+    row.addEventListener('click', () => {
+      card.classList.toggle('open');
+      // Recalculer la hauteur du body parent
+      if (!body.classList.contains('collapsed')) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
 
     const panel = document.createElement('div');
     panel.className = 'preds-panel';
@@ -324,9 +367,10 @@ Object.keys(byJournee).sort((a,b)=>a-b).forEach(j => {
 
     card.appendChild(row);
     card.appendChild(panel);
-    block.appendChild(card);
+    body.appendChild(card);
   });
 
+  block.appendChild(body);
   content.appendChild(block);
 });
 
