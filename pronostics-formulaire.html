@@ -88,7 +88,7 @@
 </div>
 
 <div class="wrap">
-  <div class="section-title">🏆 16èmes de finale — 16/24 équipes qualifiées</div>
+  <div class="section-title">🏆 16èmes de finale — 20/24 équipes qualifiées</div>
   <div class="card">
     <div class="card-head"><h2>Groupes — 1er et 2ème qualifiés</h2><span>phase de groupes</span></div>
     <div class="q-grid" id="qualGrid"></div>
@@ -109,8 +109,8 @@
 <script>
 const RECIPIENT = "afchain.cedric@gmail.com";
 const WA_NUMBER = "33607483979";
-const qualifies = {"A": {"premier": "Mexique", "deuxieme": "Afrique du Sud"}, "B": {"premier": "Suisse", "deuxieme": "Canada"}, "C": {"premier": "Brésil", "deuxieme": "Maroc"}, "D": {"premier": "États-Unis", "deuxieme": "Australie"}, "E": {"premier": "Allemagne", "deuxieme": "Côte d'Ivoire"}, "F": {"premier": "Pays-Bas", "deuxieme": "Japon"}, "G": {"premier": null, "deuxieme": null}, "H": {"premier": null, "deuxieme": null}, "I": {"premier": "France", "deuxieme": "Norvège"}, "J": {"premier": "Argentine", "deuxieme": null}, "K": {"premier": "Colombie", "deuxieme": null}, "L": {"premier": null, "deuxieme": null}};
-const koMatches = [{"id": "r16_01", "phase": "16èmes de finale", "home": "Afrique du Sud", "away": "Canada", "date": "28/06/2026", "time": "21h00", "pred_count": 7}, {"id": "r16_03", "phase": "16èmes de finale", "home": "Brésil", "away": "Japon", "date": "29/06/2026", "time": "22h30", "pred_count": 6}, {"id": "r16_05", "phase": "16èmes de finale", "home": "Pays-Bas", "away": "Maroc", "date": "30/06/2026", "time": "19h00", "pred_count": 5}, {"id": "r16_11", "phase": "16èmes de finale", "home": "États-Unis", "away": "Bosnie-Herzégovine", "date": "02/07/2026", "time": "01h00", "pred_count": 5}, {"id": "r16_06", "phase": "16èmes de finale", "home": "Côte d'Ivoire", "away": "Norvège", "date": "30/06/2026", "time": "23h00", "pred_count": 0}];
+const qualifies = {"A": {"premier": "Mexique", "deuxieme": "Afrique du Sud"}, "B": {"premier": "Suisse", "deuxieme": "Canada"}, "C": {"premier": "Brésil", "deuxieme": "Maroc"}, "D": {"premier": "États-Unis", "deuxieme": "Australie"}, "E": {"premier": "Allemagne", "deuxieme": "Côte d'Ivoire"}, "F": {"premier": "Pays-Bas", "deuxieme": "Japon"}, "G": {"premier": "Belgique", "deuxieme": "Égypte"}, "H": {"premier": "Espagne", "deuxieme": "Cap-Vert"}, "I": {"premier": "France", "deuxieme": "Norvège"}, "J": {"premier": "Argentine", "deuxieme": null}, "K": {"premier": "Colombie", "deuxieme": null}, "L": {"premier": null, "deuxieme": null}};
+const koMatches = [{"id": "r16_01", "phase": "16èmes de finale", "home": "Afrique du Sud", "away": "Canada", "date": "28/06/2026", "time": "21h00", "pred_count": 8}, {"id": "r16_02", "phase": "16èmes de finale", "home": "Allemagne", "away": "Paraguay", "date": "29/06/2026", "time": "19h00", "pred_count": 0}, {"id": "r16_03", "phase": "16èmes de finale", "home": "Brésil", "away": "Japon", "date": "29/06/2026", "time": "22h30", "pred_count": 7}, {"id": "r16_04", "phase": "16èmes de finale", "home": "France", "away": "Suède", "date": "30/06/2026", "time": "03h00", "pred_count": 0}, {"id": "r16_05", "phase": "16èmes de finale", "home": "Pays-Bas", "away": "Maroc", "date": "30/06/2026", "time": "19h00", "pred_count": 6}, {"id": "r16_06", "phase": "16èmes de finale", "home": "Côte d'Ivoire", "away": "Norvège", "date": "30/06/2026", "time": "23h00", "pred_count": 0}, {"id": "r16_11", "phase": "16èmes de finale", "home": "États-Unis", "away": "Bosnie-Herzégovine", "date": "02/07/2026", "time": "01h00", "pred_count": 5}, {"id": "r16_12", "phase": "16èmes de finale", "home": "Australie", "away": "Égypte", "date": "03/07/2026", "time": "01h00", "pred_count": 0}, {"id": "r16_15", "phase": "16èmes de finale", "home": "Argentine", "away": "Cap-Vert", "date": "04/07/2026", "time": "00h00", "pred_count": 0}];
 const players = ["SIMON", "LAURINE", "ALEX", "FRED", "MARIA", "ELISE", "ROMU", "DELPHINE", "OPHELIE", "ANGELIQUE", "CEDRIC", "EMILIE", "CARO", "DAVID", "THOMAS", "RAMON", "EMMANUEL", "JULIETTE", "GAELLE"];
 
 // Groupes qualifiés
@@ -141,8 +141,32 @@ function markSent(player, matchId, score) { try { localStorage.setItem(storageKe
 function clearSent(player, matchId) { try { localStorage.removeItem(storageKey(player,matchId)); } catch(e) {} }
 
 // Construire les cartes
-const koContainer = document.getElementById('koMatches');
+// Grouper les matchs par date
+const matchesByDate = {};
 koMatches.forEach(m => {
+  if (!matchesByDate[m.date]) matchesByDate[m.date] = [];
+  matchesByDate[m.date].push(m);
+});
+
+// Trier les dates chronologiquement (format DD/MM/YYYY)
+function dateToSortKey(dateStr) {
+  const [d, m, y] = dateStr.split('/');
+  return `${y}${m}${d}`;
+}
+
+const koContainer = document.getElementById('koMatches');
+Object.keys(matchesByDate).sort((a, b) => dateToSortKey(a).localeCompare(dateToSortKey(b))).forEach(date => {
+  // Bandeau date
+  const dateHeader = document.createElement('div');
+  dateHeader.style.cssText = 'color:var(--gold);font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin:18px 4px 8px;';
+  const [d, m, y] = date.split('/');
+  const dateObj = new Date(y, m-1, d);
+  const jours = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  dateHeader.textContent = `📅 ${jours[dateObj.getDay()]} ${d} ${mois[parseInt(m)-1]}`;
+  koContainer.appendChild(dateHeader);
+
+  matchesByDate[date].forEach(m => {
   const card = document.createElement('div');
   card.className = 'ko-card';
   card.id = 'card_'+m.id;
@@ -176,7 +200,8 @@ koMatches.forEach(m => {
     </div>
   `;
   koContainer.appendChild(card);
-});
+  }); // fin matchesByDate[date]
+}); // fin Object.keys
 
 function refreshButtons() {
   const player = playerSelect.value;
