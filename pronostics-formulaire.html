@@ -88,7 +88,7 @@
 </div>
 
 <div class="wrap">
-  <div class="section-title">⚽ Vos pronostics — 16èmes de finale</div>
+  <div class="section-title">⚽ 8ème — première partie</div>
   <div class="player-card">
     <label class="player-label" for="playerSelect">Ton prénom</label>
     <select class="player-select" id="playerSelect" onchange="refreshButtons()">
@@ -96,15 +96,21 @@
     </select>
   </div>
   <div id="koMatches"></div>
+  <div id="batchActions"></div>
 
-  <footer>Chaque pronostic ouvre ton appli mail pré-rempli — il ne reste qu'à envoyer ! — <span class="firm">Notaires CVBL</span></footer>
+  <footer>Remplis les 4 matchs puis envoie tous tes pronostics d'un coup ! — <span class="firm">Notaires CVBL</span></footer>
 </div>
 
 <script>
 const RECIPIENT = "afchain.cedric@gmail.com";
 const WA_NUMBER = "33607483979";
-const qualifies = {};
-const koMatches = [];
+const BLOCK_ID = "8e1";
+const koMatches = [
+  { id:'8e_can_mar', date:'04/07/2026', time:'19h00', phase:'Huitièmes de finale', home:'Canada', away:'Maroc', pending:false },
+  { id:'8e_m2', date:'04/07/2026', time:'23h00', phase:'Huitièmes de finale', home:'Paraguay', away:'France', pending:false },
+  { id:'8e_m3', date:'05/07/2026', time:'22h00', phase:'Huitièmes de finale', home:'Brésil', away:'Norvège', pending:false },
+  { id:'8e_m4', date:'06/07/2026', time:'02h00', phase:'Huitièmes de finale', home:'Mexique', away:'Angleterre', pending:false }
+];
 const players = ["SIMON", "LAURINE", "ALEX", "FRED", "MARIA", "ELISE", "ROMU", "DELPHINE", "OPHELIE", "ANGELIQUE", "CEDRIC", "EMILIE", "CARO", "DAVID", "THOMAS", "RAMON", "EMMANUEL", "JULIETTE", "GAELLE"];
 
 // Sélecteur joueurs
@@ -115,129 +121,137 @@ players.forEach(p => {
   playerSelect.appendChild(opt);
 });
 
-// Clé localStorage
-function storageKey(player, matchId) { return `cvbl_ko_${player}_${matchId}`; }
-function hasSent(player, matchId) { try { return !!localStorage.getItem(storageKey(player,matchId)); } catch(e) { return false; } }
-function markSent(player, matchId, score) { try { localStorage.setItem(storageKey(player,matchId), score); } catch(e) {} }
-function clearSent(player, matchId) { try { localStorage.removeItem(storageKey(player,matchId)); } catch(e) {} }
+// Clé localStorage (un seul enregistrement par joueur pour tout le bloc)
+function storageKey(player) { return `cvbl_ko_${BLOCK_ID}_${player}`; }
+function hasSent(player) { try { return !!localStorage.getItem(storageKey(player)); } catch(e) { return false; } }
+function markSent(player, summary) { try { localStorage.setItem(storageKey(player), summary); } catch(e) {} }
+function clearSent(player) { try { localStorage.removeItem(storageKey(player)); } catch(e) {} }
+
+const activeMatches = koMatches.filter(m => !m.pending);
 
 if (koMatches.length === 0) {
   const empty = document.createElement('div');
   empty.style.cssText = 'text-align:center;color:#8b93a3;font-size:0.85rem;padding:30px 16px;background:#fff;border-radius:14px;border:1px dashed #dde1ea;';
-  empty.innerHTML = '⚽ Tous les pronostics des 16èmes ont été reçus !<br><span style="font-size:0.78rem;">Les matchs des 8èmes de finale seront ajoutés ici prochainement.</span>';
+  empty.innerHTML = '⚽ Les matchs des 8èmes de finale seront ajoutés ici prochainement.';
   document.getElementById('koMatches').appendChild(empty);
 }
 
-// Construire les cartes
-const matchesByDate = {};
-koMatches.forEach(m => {
-  if (!matchesByDate[m.date]) matchesByDate[m.date] = [];
-  matchesByDate[m.date].push(m);
-});
-
-// Trier les dates chronologiquement (format DD/MM/YYYY)
-function dateToSortKey(dateStr) {
-  const [d, m, y] = dateStr.split('/');
-  return `${y}${m}${d}`;
-}
-
+// Construire les cartes (les unes sous les autres, sans bandeau de date)
 const koContainer = document.getElementById('koMatches');
-Object.keys(matchesByDate).sort((a, b) => dateToSortKey(a).localeCompare(dateToSortKey(b))).forEach(date => {
-  // Bandeau date
-  const dateHeader = document.createElement('div');
-  dateHeader.style.cssText = 'color:var(--gold);font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin:18px 4px 8px;';
-  const [d, m, y] = date.split('/');
-  const dateObj = new Date(y, m-1, d);
-  const jours = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
-  const mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-  dateHeader.textContent = `📅 ${jours[dateObj.getDay()]} ${d} ${mois[parseInt(m)-1]}`;
-  koContainer.appendChild(dateHeader);
-
-  matchesByDate[date].forEach(m => {
+koMatches.forEach(m => {
   const card = document.createElement('div');
   card.className = 'ko-card';
   card.id = 'card_'+m.id;
-  card.innerHTML = `
-    <div class="ko-phase">${m.phase}${m.date?' — '+m.date:''}</div>
-    <div class="ko-match-row">
-      <span class="ko-team">${m.home}</span>
-      <div class="ko-inputs">
-        <input type="number" min="0" max="20" class="score-input" id="h_${m.id}" inputmode="numeric" placeholder="0">
-        <span class="score-dash">—</span>
-        <input type="number" min="0" max="20" class="score-input" id="a_${m.id}" inputmode="numeric" placeholder="0">
+  if (m.pending) {
+    const knownTeam = m.home || m.away;
+    const pendingLabel = knownTeam ? `${knownTeam} vs adversaire à confirmer` : 'Équipes qualifiées à venir';
+    card.innerHTML = `
+      <div class="ko-phase">${m.phase}${m.date?' — '+m.date:''}${m.time?' · '+m.time:''}</div>
+      <div class="ko-match-row">
+        <span class="q-name pending">${pendingLabel}</span>
       </div>
-      <span class="ko-team away">${m.away}</span>
-    </div>
-    <div class="btn-row" id="btns_${m.id}" style="display:flex;gap:8px;">
-      <button class="send-btn mail-btn" onclick="sendMail('${m.id}','${m.home}','${m.away}')">📧 Mail</button>
-      <button class="send-btn wa-btn" onclick="sendWA('${m.id}','${m.home}','${m.away}')">💬 WhatsApp</button>
-    </div>
-    <div class="send-btn sent" id="btn_${m.id}" style="display:none;text-align:center;"></div>
-    <div class="resend" id="resend_${m.id}" style="display:none">
-      <a onclick="resetPred('${m.id}')">Modifier / renvoyer</a>
-    </div>
-  `;
+    `;
+  } else {
+    card.innerHTML = `
+      <div class="ko-phase">${m.phase}${m.date?' — '+m.date:''}${m.time?' · '+m.time:''}</div>
+      <div class="ko-match-row">
+        <span class="ko-team">${m.home}</span>
+        <div class="ko-inputs">
+          <input type="number" min="0" max="20" class="score-input" id="h_${m.id}" inputmode="numeric" placeholder="">
+          <span class="score-dash">—</span>
+          <input type="number" min="0" max="20" class="score-input" id="a_${m.id}" inputmode="numeric" placeholder="">
+        </div>
+        <span class="ko-team away">${m.away}</span>
+      </div>
+    `;
+  }
   koContainer.appendChild(card);
-  }); // fin matchesByDate[date]
-}); // fin Object.keys
+});
+
+// Bloc d'actions unique sous les 4 matchs
+const batchActions = document.getElementById('batchActions');
+batchActions.innerHTML = `
+  <div class="btn-row" id="batchBtns" style="display:flex;gap:8px;margin-top:6px;">
+    <button class="send-btn mail-btn" onclick="sendMailBatch()">📧 Mail</button>
+    <button class="send-btn wa-btn" onclick="sendWABatch()">💬 WhatsApp</button>
+  </div>
+  <div class="send-btn sent" id="batchSent" style="display:none;text-align:center;"></div>
+  <div class="resend" id="batchResend" style="display:none">
+    <a onclick="resetBatch()">Modifier / renvoyer</a>
+  </div>
+`;
 
 function refreshButtons() {
   const player = playerSelect.value;
-  koMatches.forEach(m => {
-    const btn = document.getElementById('btn_'+m.id);
-    const btns = document.getElementById('btns_'+m.id);
-    const resend = document.getElementById('resend_'+m.id);
+  const btns = document.getElementById('batchBtns');
+  const sentBox = document.getElementById('batchSent');
+  const resend = document.getElementById('batchResend');
+  activeMatches.forEach(m => {
     const hInput = document.getElementById('h_'+m.id);
     const aInput = document.getElementById('a_'+m.id);
-    if (player && hasSent(player, m.id)) {
-      const saved = localStorage.getItem(storageKey(player, m.id));
-      btn.style.display = 'block';
-      btn.textContent = '✅ Pronostic envoyé — ' + saved;
-      btns.style.display = 'none';
+    if (player && hasSent(player)) {
       hInput.disabled = true; aInput.disabled = true;
-      resend.style.display = 'block';
     } else {
-      btn.style.display = 'none';
-      btns.style.display = 'flex';
       hInput.disabled = false; aInput.disabled = false;
-      resend.style.display = 'none';
     }
   });
+  if (player && hasSent(player)) {
+    const saved = localStorage.getItem(storageKey(player));
+    sentBox.style.display = 'block';
+    sentBox.textContent = '✅ Pronostics envoyés — ' + saved;
+    btns.style.display = 'none';
+    resend.style.display = 'block';
+  } else {
+    sentBox.style.display = 'none';
+    btns.style.display = 'flex';
+    resend.style.display = 'none';
+  }
 }
 
-function checkInputs(id) {
+function checkAllInputs() {
   const player = playerSelect.value;
-  const h = document.getElementById('h_'+id).value;
-  const a = document.getElementById('a_'+id).value;
   if (!player) { alert('Merci de sélectionner ton prénom !'); return null; }
-  if (h === '' || a === '') { alert('Merci de remplir les deux scores !'); return null; }
-  return {player, h, a};
+  const predictions = [];
+  for (const m of activeMatches) {
+    const h = document.getElementById('h_'+m.id).value;
+    const a = document.getElementById('a_'+m.id).value;
+    if (h === '' || a === '') {
+      alert('Merci de remplir les scores des ' + activeMatches.length + ' matchs avant d\'envoyer !');
+      return null;
+    }
+    predictions.push({ home: m.home, away: m.away, h, a });
+  }
+  return { player, predictions };
 }
 
-function sendMail(id, home, away) {
-  const r = checkInputs(id); if (!r) return;
-  const {player, h, a} = r;
-  const subject = `Pronostic ${id} - ${player}`;
-  const body = `Pronostic de ${player} :\n\n${home} ${h}-${a} ${away}`;
+function buildSummary(predictions) {
+  return predictions.map(p => `${p.home} ${p.h}-${p.a} ${p.away}`).join('\n');
+}
+
+function sendMailBatch() {
+  const r = checkAllInputs(); if (!r) return;
+  const { player, predictions } = r;
+  const subject = `Pronostics 8èmes (1ère partie) - ${player}`;
+  const body = `Pronostics de ${player} :\n\n${buildSummary(predictions)}`;
   window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  markSent(player, id, h+'-'+a);
+  markSent(player, predictions.map(p => `${p.h}-${p.a}`).join(' / '));
   setTimeout(() => refreshButtons(), 800);
 }
 
-function sendWA(id, home, away) {
-  const r = checkInputs(id); if (!r) return;
-  const {player, h, a} = r;
-  const text = `Pronostic de ${player} :\n${home} ${h}-${a} ${away}`;
+function sendWABatch() {
+  const r = checkAllInputs(); if (!r) return;
+  const { player, predictions } = r;
+  const text = `Pronostics de ${player} :\n${buildSummary(predictions)}`;
   window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
-  markSent(player, id, h+'-'+a);
+  markSent(player, predictions.map(p => `${p.h}-${p.a}`).join(' / '));
   setTimeout(() => refreshButtons(), 800);
 }
 
-function resetPred(id) {
+function resetBatch() {
   const player = playerSelect.value;
   if (!player) return;
-  if (confirm('Veux-tu vraiment modifier ton pronostic pour ce match ?')) {
-    clearSent(player, id);
+  if (confirm('Veux-tu vraiment modifier tes pronostics pour ces 4 matchs ?')) {
+    clearSent(player);
     refreshButtons();
   }
 }
