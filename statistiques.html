@@ -227,12 +227,13 @@ const matchesPlayed = 96;
 const totalExact = Object.values(statsData).reduce((s,p) => s + p.exact, 0);
 const totalWin = Object.values(statsData).reduce((s,p) => s + p.vainqueur, 0);
 const bestExact = Math.max(...Object.values(statsData).map(p => p.exact));
-const bestPlayer = Object.entries(statsData).find(([,p]) => p.exact === bestExact)?.[0] || '';
+const bestPlayers = Object.entries(statsData).filter(([,p]) => p.exact === bestExact).map(([name]) => name.charAt(0)+name.slice(1).toLowerCase());
+const bestPlayer = bestPlayers.join(' & ');
 const kpiGrid = document.getElementById('kpiGrid');
 [
   {val: matchesPlayed, label: 'Matchs joués', cls: ''},
   {val: totalExact, label: 'Scores exacts au total', cls: 'gold'},
-  {val: bestExact + ' (' + bestPlayer.charAt(0)+bestPlayer.slice(1).toLowerCase() + ')', label: 'Record de scores exacts', cls: 'gold'},
+  {val: bestExact + ' (' + bestPlayer + ')', label: 'Record de scores exacts', cls: 'gold'},
 ].forEach(k => {
   const div = document.createElement('div');
   div.className = 'kpi';
