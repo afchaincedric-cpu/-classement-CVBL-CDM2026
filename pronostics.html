@@ -461,13 +461,13 @@ if (ko8Matches.length > 0) {
   ko8Section.style.marginTop = '18px';
 
   const ko8Header = document.createElement('div');
-  ko8Header.className = 'journee-title open';
+  ko8Header.className = 'journee-title';
   ko8Header.style.cssText += ';background:rgba(217,164,65,0.3);border-color:rgba(217,164,65,0.7);';
   const ko8Played = ko8Matches.filter(m => m.score_h !== null).length;
   ko8Header.innerHTML = `<span>⚽ 8èmes de finale <span style="color:rgba(255,255,255,0.5);font-size:0.7rem;font-weight:400;">(${ko8Played}/${ko8Matches.length} joués)</span></span><span class="j-chevron">▾</span>`;
   const ko8Body = document.createElement('div');
-  ko8Body.className = 'journee-body';
-  ko8Body.style.maxHeight = 'none';
+  ko8Body.className = 'journee-body collapsed';
+  ko8Body.style.maxHeight = '0';
 
   ko8Header.addEventListener('click', () => {
     const collapsed = ko8Body.classList.contains('collapsed');
@@ -512,7 +512,69 @@ if (ko8Matches.length > 0) {
 
   ko8Section.appendChild(ko8Header);
   ko8Section.appendChild(ko8Body);
+
   content.appendChild(ko8Section);
+}
+
+// Quarts de finale
+const koQFMatches = [{"id": "qf_fra_mar", "date": "2026-07-09", "date_str": "09/07/2026", "time": "22h00", "phase": "Quarts de finale", "home": "France", "away": "Maroc", "score_h": null, "score_a": null, "preds": [{"j": "SIMON", "h": 2, "a": 0}, {"j": "LAURINE", "h": 3, "a": 1}, {"j": "ALEX", "h": 2, "a": 1}, {"j": "FRED", "h": 2, "a": 1}, {"j": "MARIA", "h": 2, "a": 0}, {"j": "ELISE", "h": 2, "a": 1}, {"j": "ROMU", "h": 2, "a": 1}, {"j": "DELPHINE", "h": 2, "a": 1}, {"j": "OPHELIE", "h": 2, "a": 0}, {"j": "ANGELIQUE", "h": 1, "a": 1}, {"j": "CEDRIC", "h": 2, "a": 1}, {"j": "EMILIE", "h": 2, "a": 0}, {"j": "CARO", "h": 2, "a": 1}, {"j": "DAVID", "h": 3, "a": 1}, {"j": "THOMAS", "h": 3, "a": 1}, {"j": "RAMON", "h": 2, "a": 1}, {"j": "EMMANUEL", "h": 2, "a": 1}, {"j": "JULIETTE", "h": 2, "a": 1}, {"j": "GAELLE", "h": 2, "a": 1}]}, {"id": "qf_esp_bel", "date": "2026-07-10", "date_str": "10/07/2026", "time": "21h00", "phase": "Quarts de finale", "home": "Espagne", "away": "Belgique", "score_h": null, "score_a": null, "preds": [{"j": "SIMON", "h": 2, "a": 1}, {"j": "LAURINE", "h": 3, "a": 1}, {"j": "ALEX", "h": 2, "a": 0}, {"j": "FRED", "h": 2, "a": 2}, {"j": "MARIA", "h": 1, "a": 0}, {"j": "ELISE", "h": 0, "a": 1}, {"j": "ROMU", "h": 2, "a": 0}, {"j": "DELPHINE", "h": 2, "a": 0}, {"j": "OPHELIE", "h": 3, "a": 2}, {"j": "ANGELIQUE", "h": 2, "a": 1}, {"j": "CEDRIC", "h": 1, "a": 0}, {"j": "EMILIE", "h": 2, "a": 0}, {"j": "CARO", "h": 3, "a": 1}, {"j": "DAVID", "h": 2, "a": 0}, {"j": "THOMAS", "h": 1, "a": 1}, {"j": "RAMON", "h": 2, "a": 0}, {"j": "EMMANUEL", "h": 2, "a": 1}, {"j": "JULIETTE", "h": 1, "a": 0}, {"j": "GAELLE", "h": 2, "a": 1}]}, {"id": "qf_nor_ang", "date": "2026-07-11", "date_str": "11/07/2026", "time": "23h00", "phase": "Quarts de finale", "home": "Norvège", "away": "Angleterre", "score_h": null, "score_a": null, "preds": [{"j": "SIMON", "h": 1, "a": 2}, {"j": "LAURINE", "h": 1, "a": 2}, {"j": "ALEX", "h": 1, "a": 2}, {"j": "FRED", "h": 1, "a": 1}, {"j": "MARIA", "h": 1, "a": 1}, {"j": "ELISE", "h": 2, "a": 0}, {"j": "ROMU", "h": 0, "a": 1}, {"j": "DELPHINE", "h": 0, "a": 1}, {"j": "OPHELIE", "h": 2, "a": 2}, {"j": "ANGELIQUE", "h": 1, "a": 1}, {"j": "CEDRIC", "h": 1, "a": 3}, {"j": "EMILIE", "h": 2, "a": 0}, {"j": "CARO", "h": 2, "a": 1}, {"j": "DAVID", "h": 1, "a": 1}, {"j": "THOMAS", "h": 1, "a": 3}, {"j": "RAMON", "h": 1, "a": 3}, {"j": "EMMANUEL", "h": 1, "a": 1}, {"j": "JULIETTE", "h": 0, "a": 2}, {"j": "GAELLE", "h": 1, "a": 2}]}, {"id": "qf_arg_sui", "date": "2026-07-12", "date_str": "12/07/2026", "time": "03h00", "phase": "Quarts de finale", "home": "Argentine", "away": "Suisse", "score_h": null, "score_a": null, "preds": [{"j": "SIMON", "h": 2, "a": 1}, {"j": "LAURINE", "h": 3, "a": 0}, {"j": "ALEX", "h": 2, "a": 0}, {"j": "FRED", "h": 2, "a": 1}, {"j": "MARIA", "h": 2, "a": 1}, {"j": "ELISE", "h": 1, "a": 2}, {"j": "ROMU", "h": 2, "a": 1}, {"j": "DELPHINE", "h": 2, "a": 0}, {"j": "OPHELIE", "h": 1, "a": 2}, {"j": "ANGELIQUE", "h": 2, "a": 0}, {"j": "CEDRIC", "h": 2, "a": 0}, {"j": "EMILIE", "h": 2, "a": 1}, {"j": "CARO", "h": 2, "a": 1}, {"j": "DAVID", "h": 2, "a": 1}, {"j": "THOMAS", "h": 1, "a": 0}, {"j": "RAMON", "h": 2, "a": 1}, {"j": "EMMANUEL", "h": 2, "a": 1}, {"j": "JULIETTE", "h": 2, "a": 1}, {"j": "GAELLE", "h": 2, "a": 0}]}];
+
+if (koQFMatches && koQFMatches.length > 0) {
+  const koQFSection = document.createElement('div');
+  koQFSection.style.marginTop = '18px';
+
+  const koQFHeader = document.createElement('div');
+  koQFHeader.className = 'journee-title';
+  koQFHeader.style.cssText += ';background:rgba(217,164,65,0.4);border-color:rgba(217,164,65,0.9);';
+  const koQFPlayed = koQFMatches.filter(m => m.score_h !== null).length;
+  koQFHeader.innerHTML = `<span>🏆 Quarts de finale <span style="color:rgba(255,255,255,0.5);font-size:0.7rem;font-weight:400;">(${koQFPlayed}/${koQFMatches.length} joués)</span></span><span class="j-chevron">▾</span>`;
+  const koQFBody = document.createElement('div');
+  koQFBody.className = 'journee-body';
+  koQFBody.style.maxHeight = 'none';
+
+  koQFHeader.addEventListener('click', () => {
+    const collapsed = koQFBody.classList.contains('collapsed');
+    if (collapsed) { koQFBody.classList.remove('collapsed'); koQFBody.style.maxHeight = 'none'; koQFHeader.classList.add('open'); }
+    else { koQFBody.classList.add('collapsed'); koQFBody.style.maxHeight = '0'; koQFHeader.classList.remove('open'); }
+  });
+
+  koQFMatches.forEach((m, idx) => {
+    const played = m.score_h !== null && m.score_a !== null;
+    const card = document.createElement('div');
+    card.className = 'match-card';
+    const row = document.createElement('div');
+    row.className = 'match-row';
+    row.innerHTML = `
+      <div class="match-group" style="font-size:0.6rem;">QF</div>
+      <div class="match-teams">
+        <span class="team home">${m.home}</span>
+        <span class="match-score ${played?'':'pending'}">${played?m.score_h+' - '+m.score_a:'à venir'}</span>
+        <span class="team away">${m.away}</span>
+      </div>
+      <div class="match-meta">${m.date_str} · ${m.time}</div>
+      <div class="chevron">▾</div>
+    `;
+    row.addEventListener('click', () => { card.classList.toggle('open'); });
+    const panel = document.createElement('div');
+    panel.className = 'preds-panel';
+    const grid = document.createElement('div');
+    grid.className = 'preds-grid';
+    m.preds.forEach(p => {
+      const hasPred = p.h !== null && p.a !== null;
+      const isExact = played && hasPred && p.h === m.score_h && p.a === m.score_a;
+      const item = document.createElement('div');
+      item.className = 'pred-item';
+      item.innerHTML = `<span class="pred-name">${p.j}</span><span class="pred-score ${isExact?'exact':(hasPred?'':'empty')}">${hasPred?p.h+'-'+p.a:'—'}</span>`;
+      grid.appendChild(item);
+    });
+    panel.appendChild(grid);
+    card.appendChild(row); card.appendChild(panel);
+    koQFBody.appendChild(card);
+  });
+
+  koQFSection.appendChild(koQFHeader);
+  koQFSection.appendChild(koQFBody);
+  content.appendChild(koQFSection);
 }
 
 }
