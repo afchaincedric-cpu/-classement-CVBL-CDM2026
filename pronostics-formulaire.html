@@ -88,7 +88,7 @@
 </div>
 
 <div class="wrap">
-  <div class="section-title">⚽ Quarts de finale</div>
+  <div class="section-title">⚽ Demi-finales</div>
   <div class="player-card">
     <label class="player-label" for="playerSelect">Ton prénom</label>
     <select class="player-select" id="playerSelect" onchange="refreshButtons()">
@@ -104,12 +104,10 @@
 <script>
 const RECIPIENT = "afchain.cedric@gmail.com";
 const WA_NUMBER = "33607483979";
-const BLOCK_ID = "qf1";
+const BLOCK_ID = "sf1";
 const koMatches = [
-  { id:'qf1_m1', date:'', time:'', phase:'Quarts de finale', home:'', away:'', pending:true },
-  { id:'qf1_m2', date:'', time:'', phase:'Quarts de finale', home:'', away:'', pending:true },
-  { id:'qf1_m3', date:'', time:'', phase:'Quarts de finale', home:'', away:'', pending:true },
-  { id:'qf1_m4', date:'', time:'', phase:'Quarts de finale', home:'', away:'', pending:true }
+  { id:'sf_fra_esp', date:'14/07/2026', time:'21h00', phase:'Demi-finale', home:'France', away:'Espagne', pending:false },
+  { id:'sf_ang_arg', date:'15/07/2026', time:'21h00', phase:'Demi-finale', home:'Angleterre', away:'Argentine', pending:false }
 ];
 const players = ["SIMON", "LAURINE", "ALEX", "FRED", "MARIA", "ELISE", "ROMU", "DELPHINE", "OPHELIE", "ANGELIQUE", "CEDRIC", "EMILIE", "CARO", "DAVID", "THOMAS", "RAMON", "EMMANUEL", "JULIETTE", "GAELLE"];
 
@@ -231,7 +229,7 @@ function buildSummary(predictions) {
 function sendMailBatch() {
   const r = checkAllInputs(); if (!r) return;
   const { player, predictions } = r;
-  const subject = `Pronostics Quarts de finale - ${player}`;
+  const subject = `Pronostics Demi-finales - ${player}`;
   const body = `Pronostics de ${player} :\n\n${buildSummary(predictions)}`;
   window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   markSent(player, predictions.map(p => `${p.h}-${p.a}`).join(' / '));
