@@ -583,13 +583,13 @@ if (koSFMatches && koSFMatches.length > 0) {
   const koSFSection = document.createElement('div');
   koSFSection.style.marginTop = '18px';
   const koSFHeader = document.createElement('div');
-  koSFHeader.className = 'journee-title open';
+  koSFHeader.className = 'journee-title';
   koSFHeader.style.cssText += ';background:rgba(217,164,65,0.55);border-color:rgba(217,164,65,1);';
   const koSFPlayed = koSFMatches.filter(m => m.score_h !== null).length;
   koSFHeader.innerHTML = `<span>🏆 Demi-finales <span style="color:rgba(255,255,255,0.5);font-size:0.7rem;font-weight:400;">(${koSFPlayed}/${koSFMatches.length} joués)</span></span><span class="j-chevron">▾</span>`;
   const koSFBody = document.createElement('div');
-  koSFBody.className = 'journee-body';
-  koSFBody.style.maxHeight = 'none';
+  koSFBody.className = 'journee-body collapsed';
+  koSFBody.style.maxHeight = '0';
   koSFHeader.addEventListener('click', () => {
     const collapsed = koSFBody.classList.contains('collapsed');
     if (collapsed) { koSFBody.classList.remove('collapsed'); koSFBody.style.maxHeight = 'none'; koSFHeader.classList.add('open'); }
@@ -622,6 +622,53 @@ if (koSFMatches && koSFMatches.length > 0) {
   koSFSection.appendChild(koSFHeader);
   koSFSection.appendChild(koSFBody);
   content.appendChild(koSFSection);
+}
+
+const koFinalMatches = [{"id": "final_3p", "date": "2026-07-18", "date_str": "18/07/2026", "time": "23h00", "phase": "3ème place", "home": "France", "away": "Angleterre", "score_h": 4, "score_a": 6, "preds": [{"j": "SIMON", "h": 2, "a": 1}, {"j": "LAURINE", "h": 1, "a": 2}, {"j": "ALEX", "h": 2, "a": 1}, {"j": "FRED", "h": 2, "a": 0}, {"j": "MARIA", "h": 2, "a": 1}, {"j": "ELISE", "h": 2, "a": 1}, {"j": "ROMU", "h": 1, "a": 0}, {"j": "DELPHINE", "h": 2, "a": 1}, {"j": "OPHELIE", "h": 0, "a": 2}, {"j": "ANGELIQUE", "h": 2, "a": 1}, {"j": "CEDRIC", "h": 0, "a": 2}, {"j": "EMILIE", "h": 2, "a": 0}, {"j": "CARO", "h": 1, "a": 2}, {"j": "DAVID", "h": null, "a": null}, {"j": "THOMAS", "h": 3, "a": 3}, {"j": "RAMON", "h": 1, "a": 1}, {"j": "EMMANUEL", "h": 3, "a": 1}, {"j": "JULIETTE", "h": 1, "a": 0}, {"j": "GAELLE", "h": 2, "a": 0}]}, {"id": "final_1p", "date": "2026-07-19", "date_str": "19/07/2026", "time": "21h00", "phase": "Finale", "home": "Espagne", "away": "Argentine", "score_h": null, "score_a": null, "preds": [{"j": "SIMON", "h": 2, "a": 1}, {"j": "LAURINE", "h": 2, "a": 1}, {"j": "ALEX", "h": 2, "a": 1}, {"j": "FRED", "h": 1, "a": 2}, {"j": "MARIA", "h": 1, "a": 1}, {"j": "ELISE", "h": 2, "a": 3}, {"j": "ROMU", "h": 1, "a": 1}, {"j": "DELPHINE", "h": 2, "a": 1}, {"j": "OPHELIE", "h": 2, "a": 2}, {"j": "ANGELIQUE", "h": 2, "a": 1}, {"j": "CEDRIC", "h": 1, "a": 3}, {"j": "EMILIE", "h": 1, "a": 2}, {"j": "CARO", "h": 2, "a": 1}, {"j": "DAVID", "h": null, "a": null}, {"j": "THOMAS", "h": 4, "a": 5}, {"j": "RAMON", "h": 1, "a": 2}, {"j": "EMMANUEL", "h": 2, "a": 1}, {"j": "JULIETTE", "h": 0, "a": 2}, {"j": "GAELLE", "h": 2, "a": 1}]}];
+
+if (koFinalMatches && koFinalMatches.length > 0) {
+  const koFinalSection = document.createElement('div');
+  koFinalSection.style.marginTop = '18px';
+  const koFinalHeader = document.createElement('div');
+  koFinalHeader.className = 'journee-title open';
+  koFinalHeader.style.cssText += ';background:rgba(217,164,65,0.75);border-color:rgba(217,164,65,1);box-shadow:0 0 12px rgba(217,164,65,0.4);';
+  const koFinalPlayed = koFinalMatches.filter(m => m.score_h !== null).length;
+  koFinalHeader.innerHTML = `<span>🏆 Petite finale &amp; Finale <span style="color:rgba(255,255,255,0.6);font-size:0.7rem;font-weight:400;">(${koFinalPlayed}/${koFinalMatches.length} joués)</span></span><span class="j-chevron">▾</span>`;
+  const koFinalBody = document.createElement('div');
+  koFinalBody.className = 'journee-body';
+  koFinalBody.style.maxHeight = 'none';
+  koFinalHeader.addEventListener('click', () => {
+    const collapsed = koFinalBody.classList.contains('collapsed');
+    if (collapsed) { koFinalBody.classList.remove('collapsed'); koFinalBody.style.maxHeight = 'none'; koFinalHeader.classList.add('open'); }
+    else { koFinalBody.classList.add('collapsed'); koFinalBody.style.maxHeight = '0'; koFinalHeader.classList.remove('open'); }
+  });
+  koFinalMatches.forEach((m, idx) => {
+    const played = m.score_h !== null && m.score_a !== null;
+    const card = document.createElement('div');
+    card.className = 'match-card';
+    const row = document.createElement('div');
+    row.className = 'match-row';
+    row.innerHTML = `<div class="match-group" style="font-size:0.55rem;">${m.phase==='Finale'?'🏆':'🥉'}</div><div class="match-teams"><span class="team home">${m.home}</span><span class="match-score ${played?'':'pending'}">${played?m.score_h+' - '+m.score_a:'à venir'}</span><span class="team away">${m.away}</span></div><div class="match-meta">${m.date_str} · ${m.time}</div><div class="chevron">▾</div>`;
+    row.addEventListener('click', () => { card.classList.toggle('open'); });
+    const panel = document.createElement('div');
+    panel.className = 'preds-panel';
+    const grid = document.createElement('div');
+    grid.className = 'preds-grid';
+    m.preds.forEach(p => {
+      const hasPred = p.h !== null && p.a !== null;
+      const isExact = played && hasPred && p.h === m.score_h && p.a === m.score_a;
+      const item = document.createElement('div');
+      item.className = 'pred-item';
+      item.innerHTML = `<span class="pred-name">${p.j}</span><span class="pred-score ${isExact?'exact':(hasPred?'':'empty')}">${hasPred?p.h+'-'+p.a:'—'}</span>`;
+      grid.appendChild(item);
+    });
+    panel.appendChild(grid);
+    card.appendChild(row); card.appendChild(panel);
+    koFinalBody.appendChild(card);
+  });
+  koFinalSection.appendChild(koFinalHeader);
+  koFinalSection.appendChild(koFinalBody);
+  content.appendChild(koFinalSection);
 }
 
 }
