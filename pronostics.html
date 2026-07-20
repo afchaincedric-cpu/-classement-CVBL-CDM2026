@@ -249,20 +249,20 @@
       <div class="office">Notaires CVBL — Corbie · Villers-Bretonneux · Longueau</div>
     </div>
   </div>
-  <div class="nav-pill">
-    <a href="index.html">Classement</a>
-    <a href="pronostics.html" class="active">Pronostics par match</a>
-    <a href="pronostics-formulaire.html">Pronostics à compléter</a>
-    <a href="statistiques.html">Statistiques</a>
+  <div class="nav-pill" style="position:relative;z-index:2;max-width:760px;margin:18px auto 0;display:flex;gap:10px;flex-wrap:wrap;">
+    <a href="index.html" style="text-decoration:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);color:#fff;padding:7px 16px;border-radius:30px;font-size:0.78rem;">Classement</a>
+    <a href="pronostics.html" style="text-decoration:none;background:var(--gold);color:var(--navy-deep);border:1px solid var(--gold);padding:7px 16px;border-radius:30px;font-size:0.78rem;font-weight:600;">Pronostics par match</a>
+    <a href="joueur.html" style="text-decoration:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);color:#fff;padding:7px 16px;border-radius:30px;font-size:0.78rem;">Fiche joueur</a>
+    <a href="statistiques.html" style="text-decoration:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);color:#fff;padding:7px 16px;border-radius:30px;font-size:0.78rem;">Statistiques</a>
   </div>
 
   <div style="position:relative;z-index:2;max-width:880px;margin:18px auto 0;padding:0 4px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
       <span style="color:rgba(255,255,255,0.75);font-size:0.75rem;letter-spacing:0.5px;text-transform:uppercase;">Avancement du tournoi</span>
-      <span style="color:var(--gold);font-weight:700;font-size:0.9rem;">103 <span style="color:rgba(255,255,255,0.5);font-weight:400;">/ 104 matchs joués</span></span>
+      <span style="color:var(--gold);font-weight:700;font-size:0.9rem;">104 <span style="color:rgba(255,255,255,0.5);font-weight:400;">/ 104 matchs joués</span></span>
     </div>
     <div style="background:rgba(255,255,255,0.12);border-radius:20px;height:8px;overflow:hidden;">
-      <div style="background:var(--gold);height:100%;border-radius:20px;width:99.0%;transition:width 0.4s ease;"></div>
+      <div style="background:var(--gold);height:100%;border-radius:20px;width:100%;transition:width 0.4s ease;"></div>
     </div>
   </div>
 </div>
@@ -624,7 +624,7 @@ if (koSFMatches && koSFMatches.length > 0) {
   content.appendChild(koSFSection);
 }
 
-const koFinalMatches = [{"id": "final_3p", "date": "2026-07-18", "date_str": "18/07/2026", "time": "23h00", "phase": "3ème place", "home": "France", "away": "Angleterre", "score_h": 4, "score_a": 6, "preds": [{"j": "SIMON", "h": 2, "a": 1}, {"j": "LAURINE", "h": 1, "a": 2}, {"j": "ALEX", "h": 2, "a": 1}, {"j": "FRED", "h": 2, "a": 0}, {"j": "MARIA", "h": 2, "a": 1}, {"j": "ELISE", "h": 2, "a": 1}, {"j": "ROMU", "h": 1, "a": 0}, {"j": "DELPHINE", "h": 2, "a": 1}, {"j": "OPHELIE", "h": 0, "a": 2}, {"j": "ANGELIQUE", "h": 2, "a": 1}, {"j": "CEDRIC", "h": 0, "a": 2}, {"j": "EMILIE", "h": 2, "a": 0}, {"j": "CARO", "h": 1, "a": 2}, {"j": "DAVID", "h": null, "a": null}, {"j": "THOMAS", "h": 3, "a": 3}, {"j": "RAMON", "h": 1, "a": 1}, {"j": "EMMANUEL", "h": 3, "a": 1}, {"j": "JULIETTE", "h": 1, "a": 0}, {"j": "GAELLE", "h": 2, "a": 0}]}, {"id": "final_1p", "date": "2026-07-19", "date_str": "19/07/2026", "time": "21h00", "phase": "Finale", "home": "Espagne", "away": "Argentine", "score_h": null, "score_a": null, "preds": [{"j": "SIMON", "h": 2, "a": 1}, {"j": "LAURINE", "h": 2, "a": 1}, {"j": "ALEX", "h": 2, "a": 1}, {"j": "FRED", "h": 1, "a": 2}, {"j": "MARIA", "h": 1, "a": 1}, {"j": "ELISE", "h": 2, "a": 3}, {"j": "ROMU", "h": 1, "a": 1}, {"j": "DELPHINE", "h": 2, "a": 1}, {"j": "OPHELIE", "h": 2, "a": 2}, {"j": "ANGELIQUE", "h": 2, "a": 1}, {"j": "CEDRIC", "h": 1, "a": 3}, {"j": "EMILIE", "h": 1, "a": 2}, {"j": "CARO", "h": 2, "a": 1}, {"j": "DAVID", "h": null, "a": null}, {"j": "THOMAS", "h": 4, "a": 5}, {"j": "RAMON", "h": 1, "a": 2}, {"j": "EMMANUEL", "h": 2, "a": 1}, {"j": "JULIETTE", "h": 0, "a": 2}, {"j": "GAELLE", "h": 2, "a": 1}]}];
+const koFinalMatches = [{"id": "final_3p", "date": "2026-07-18", "date_str": "18/07/2026", "time": "23h00", "phase": "3ème place", "home": "France", "away": "Angleterre", "score_h": 4, "score_a": 6, "preds": [{"j": "SIMON", "h": 2, "a": 1}, {"j": "LAURINE", "h": 1, "a": 2}, {"j": "ALEX", "h": 2, "a": 1}, {"j": "FRED", "h": 2, "a": 0}, {"j": "MARIA", "h": 2, "a": 1}, {"j": "ELISE", "h": 2, "a": 1}, {"j": "ROMU", "h": 1, "a": 0}, {"j": "DELPHINE", "h": 2, "a": 1}, {"j": "OPHELIE", "h": 0, "a": 2}, {"j": "ANGELIQUE", "h": 2, "a": 1}, {"j": "CEDRIC", "h": 0, "a": 2}, {"j": "EMILIE", "h": 2, "a": 0}, {"j": "CARO", "h": 1, "a": 2}, {"j": "DAVID", "h": null, "a": null}, {"j": "THOMAS", "h": 3, "a": 3}, {"j": "RAMON", "h": 1, "a": 1}, {"j": "EMMANUEL", "h": 3, "a": 1}, {"j": "JULIETTE", "h": 1, "a": 0}, {"j": "GAELLE", "h": 2, "a": 0}]}, {"id": "final_1p", "date": "2026-07-19", "date_str": "19/07/2026", "time": "21h00", "phase": "Finale", "home": "Espagne", "away": "Argentine", "score_h": 0, "score_a": 0, "preds": [{"j": "SIMON", "h": 2, "a": 1}, {"j": "LAURINE", "h": 2, "a": 1}, {"j": "ALEX", "h": 2, "a": 1}, {"j": "FRED", "h": 1, "a": 2}, {"j": "MARIA", "h": 1, "a": 1}, {"j": "ELISE", "h": 2, "a": 3}, {"j": "ROMU", "h": 1, "a": 1}, {"j": "DELPHINE", "h": 2, "a": 1}, {"j": "OPHELIE", "h": 2, "a": 2}, {"j": "ANGELIQUE", "h": 2, "a": 1}, {"j": "CEDRIC", "h": 1, "a": 3}, {"j": "EMILIE", "h": 1, "a": 2}, {"j": "CARO", "h": 2, "a": 1}, {"j": "DAVID", "h": null, "a": null}, {"j": "THOMAS", "h": 4, "a": 5}, {"j": "RAMON", "h": 1, "a": 2}, {"j": "EMMANUEL", "h": 2, "a": 1}, {"j": "JULIETTE", "h": 0, "a": 2}, {"j": "GAELLE", "h": 2, "a": 1}]}];
 
 if (koFinalMatches && koFinalMatches.length > 0) {
   const koFinalSection = document.createElement('div');
